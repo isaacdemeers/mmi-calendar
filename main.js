@@ -45,19 +45,21 @@ document.querySelector('body').addEventListener('click', function (e) {
 
 });
 
-document.querySelector('#year').addEventListener('change', function (e) {
-  V.uicalendar.clear();
-  V.renderGroups(e.target.value, M.Groups);
+document.querySelector('body').addEventListener('change', function (e) {
 
-  V.uicalendar.createEvents(M.getEvents(e.target.value));
+  if (e.target.id.includes('year')) {
+    V.uicalendar.clear();
+    V.renderGroups(e.target.value, M.Groups);
 
+    V.uicalendar.createEvents(M.getEvents(e.target.value));
+  }
+
+  if (e.target.id.includes('group')) {
+    V.uicalendar.clear();
+    let data = e.target.value.split(',')
+    V.uicalendar.createEvents(M.getEventsByGroup(data[0], data[1]));
+  }
 });
 
-document.querySelector('#group').addEventListener('change', function (e) {
-  V.uicalendar.clear();
-  let data = e.target.value.split(',')
-  V.uicalendar.createEvents(M.getEventsByGroup(data[0], data[1]));
-
-});
 
 

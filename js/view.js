@@ -28,15 +28,15 @@ V.uicalendar = new Calendar('#calendar', {
 });
 
 V.renderGroups = function (year, groups) {
-  let html = document.querySelector('#group').innerHTML.firstElementChild;
+  let html = '';
+  let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
 
-  //supprime tout sauf le premier enfant
 
-  console.log(groups[year]);
+
   groups[year].forEach(group => {
     html += `<option value=${year},BUT${year.charAt(3)}-${group}>${group}</option>`;
   });
-  document.querySelector('#group').innerHTML = html;
+  document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
 export { V };

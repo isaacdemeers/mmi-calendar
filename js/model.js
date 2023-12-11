@@ -13,9 +13,9 @@ let Events = {
 let M = {};
 
 M.Groups = {
-    mmi1: ['G1', 'G21', 'G22', 'G3'],
+    mmi1: ['G1', 'G21', 'G22', 'G3', 'G4'],
     mmi2: ['G1', 'G21', 'G22', 'G3'],
-    mmi3: ['G1', 'G21', 'G22', 'G3']
+    mmi3: ['G1', 'G2', 'G3']
 }
 
 M.getEvents = function (annee) {
