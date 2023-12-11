@@ -37,5 +37,9 @@ V.renderGroups = function (year, groups) {
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
+V.clearSearchBar = function () {
+  document.querySelector('#search').value = '';
+}
+
 
 export { V };

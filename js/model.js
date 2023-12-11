@@ -13,6 +13,7 @@ let Events = {
 let M = {};
 
 M.year = 'mmi1'
+M.group = 'all'
 
 M.Groups = {
     mmi1: ['G1', 'G21', 'G22', 'G3', 'G4'],
@@ -36,11 +37,20 @@ M.getEvents = function (annee) {
 }
 
 M.getEventsByGroup = function (annee, group) {
-    if (annee in Events) {
-        let events = Events[annee].toObject();
-        console.log(events);
-        return events.filter(event => event.attendees.includes(group));
+    console.log(annee, group);
+    if (group != 'all') {
+        if (annee in Events) {
+            let events = Events[annee].toObject();
+            return events.filter(event => event.attendees.includes(group));
+        }
     }
+
+    else {
+        console.log('all');
+        return Events[annee].toObject();
+    }
+
+
     return null;
 }
 
@@ -48,19 +58,20 @@ M.getEventsByGroup = function (annee, group) {
 M.filter = function (events, keywords) {
 
     if (keywords != '') {
+        let newEvents = [];
         keywords = keywords.toLowerCase();
-        return events.filter(event => {
-            for (let keyword of keywords) {
-                const fieldsToCheck = ['title', 'body', 'location'];
 
-                if (fieldsToCheck.some(field => event[field] && event[field].toLowerCase.includes(keyword))) {
-                    return true;
-                }
+        events.forEach(event => {
+            let data = event.title + event.location + event.body;
+            data = data.toLowerCase();
+
+            if (data.includes(keywords)) {
+                newEvents.push(event);
             }
-            return false;
+        });
 
-        }
-        );
+        return newEvents;
+
     }
     else {
         return events;

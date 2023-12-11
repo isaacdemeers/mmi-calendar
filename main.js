@@ -52,12 +52,18 @@ document.querySelector('body').addEventListener('change', function (e) {
     V.renderGroups(e.target.value, M.Groups);
     M.year = e.target.value;
     V.uicalendar.createEvents(M.getEvents(e.target.value));
+    V.clearSearchBar();
+
   }
 
   if (e.target.id.includes('group')) {
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.getEventsByGroup(M.year, e.target.value));
+    M.group = e.target.value;
+    V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
+    V.clearSearchBar();
+
   }
+
 });
 
 document.querySelector('body').addEventListener('keyup', function (e) {
@@ -65,7 +71,7 @@ document.querySelector('body').addEventListener('keyup', function (e) {
   if (e.target.id.includes('search')) {
     console.log(e.target.value);
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.filter(M.getEvents(M.year), e.target.value));
+    V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
   }
 });
 
