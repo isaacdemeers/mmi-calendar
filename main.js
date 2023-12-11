@@ -12,8 +12,9 @@ import { V } from "./js/view.js";
    pour ensuite les passer à la vue pour affichage.
 
    Exception : Afficher 1, 2 ou les 3 années de formation sans autre filtrage peut être géré uniquement au niveau de la vue.
-*/
    
+*/
+
 
 // loadind data (and wait for it !)
 await M.init();
@@ -39,4 +40,4 @@ let edt = [
 ]
 
 // creating events in the calendar
-V.uicalendar.createEvents( edt );
+V.uicalendar.createEvents(edt);
