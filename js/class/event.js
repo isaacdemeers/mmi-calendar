@@ -110,7 +110,7 @@ class Event {
             location: this.#location,
             backgroundColor: this.type,
             attendees: this.#groups,
-            borderColor: "",
+            borderColor: "#",
         }
     }
 }
