@@ -59,15 +59,16 @@ M.filter = function (events, keywords) {
 
     if (keywords != '') {
         let newEvents = [];
-        keywords = keywords.toLowerCase();
+        keywords = keywords.split(' ');
 
         events.forEach(event => {
             let data = event.title + event.location + event.body;
             data = data.toLowerCase();
 
-            if (data.includes(keywords)) {
+            if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
                 newEvents.push(event);
             }
+
         });
 
         return newEvents;
