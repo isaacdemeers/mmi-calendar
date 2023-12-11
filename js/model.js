@@ -14,6 +14,13 @@ M.getEvents = function (annee) {
     if (annee in Events) {
         return Events[annee].toObject();
     }
+    else if (annee == 'all') {
+        let events = [];
+        for (let annee in Events) {
+            events = events.concat(Events[annee].toObject());
+        }
+        return events;
+    }
     return null;
 }
 
@@ -25,6 +32,7 @@ M.init = async function () {
         data = ical.parseICS(data);
         Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
         Events[annee].addEvents(data);
+
     }
 
 

@@ -22,8 +22,14 @@ await M.init();
 
 
 
+
+
 // creating events in the calendar
 V.uicalendar.createEvents(M.getEvents('mmi1'));
+V.setColor();
+
+
+
 
 
 document.querySelector('body').addEventListener('click', function (e) {
@@ -38,4 +44,13 @@ document.querySelector('body').addEventListener('click', function (e) {
   if (e.target.id.includes('today')) {
     V.uicalendar.today();
   }
+
 });
+
+document.querySelector('#year').addEventListener('change', function (e) {
+  V.uicalendar.clear();
+  V.uicalendar.createEvents(M.getEvents(e.target.value));
+  V.setColor();
+});
+
+

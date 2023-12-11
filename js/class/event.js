@@ -17,9 +17,9 @@ class Event {
         this.#end = new Date(end);
         this.#location = location;
 
-        this.#groups = summary.slice(summary.lastIndexOf(',')+1);
+        this.#groups = summary.slice(summary.lastIndexOf(',') + 1);
         this.#groups = this.#groups.split('.');
-        this.#groups = this.#groups.map( gr => gr.replace(/\s/g, "") );
+        this.#groups = this.#groups.map(gr => gr.replace(/\s/g, ""));
     }
 
     get id() {
@@ -47,7 +47,7 @@ class Event {
     }
 
     get groups() {
-        return this.#groups.map( gr => gr); // retourne une copie du tableau
+        return this.#groups.map(gr => gr); // retourne une copie du tableau
     }
 
     // retourne un objet contenant les informations de l'événement
@@ -59,9 +59,11 @@ class Event {
             body: this.#description,
             start: this.#start,
             end: this.#end,
-            location: this.#location 
+            location: this.#location,
+            // change la couleur de l'événement en fonction du groupe
+            color: 'gray',
         }
     }
 }
 
-export {Event};
+export { Event };
