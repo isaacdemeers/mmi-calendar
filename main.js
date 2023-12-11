@@ -40,4 +40,4 @@ let edt = [
 ]
 
 // creating events in the calendar
-V.uicalendar.createEvents(edt);
+V.uicalendar.createEvents(M.getEvents('mmi1'));

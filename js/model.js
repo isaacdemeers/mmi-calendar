@@ -10,19 +10,25 @@ let Events = {
 
 let M = {};
 
-M.getEvents = function(annee) {
-    if ( annee in Events ) {
+M.getEvents = function (annee) {
+    if (annee in Events) {
         return Events[annee].toObject();
     }
     return null;
 }
 
-M.init = async function() {
-    let data = await fetch('./data/mmi1.ics');
-    data = await data.text();
-    data = ical.parseICS(data);
-    Events.mmi1 = new EventManager('mmi1', 'MMI 1', 'Agenda des MMI 1');
-    Events.mmi1.addEvents(data);
+M.init = async function () {
+    // boucle for qui recuperer la cle et la valeur de chaque element du tableau
+    for (let annee in Events) {
+
+        let data = await fetch('./data/' + annee + '.ics');
+        data = await data.text();
+        data = ical.parseICS(data);
+        Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
+        Events[annee].addEvents(data);
+    }
+
+
 }
 
 export { M };
