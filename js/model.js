@@ -33,6 +33,15 @@ M.getEvents = function (annee) {
     return null;
 }
 
+M.getEventsByGroup = function (annee, group) {
+    if (annee in Events) {
+        let events = Events[annee].toObject();
+        console.log(events);
+        return events.filter(event => event.attendees.includes(group));
+    }
+    return null;
+}
+
 M.init = async function () {
     for (let annee in Events) {
 

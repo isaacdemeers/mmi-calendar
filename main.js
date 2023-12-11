@@ -47,13 +47,16 @@ document.querySelector('body').addEventListener('click', function (e) {
 
 document.querySelector('#year').addEventListener('change', function (e) {
   V.uicalendar.clear();
+  V.renderGroups(e.target.value, M.Groups);
+
   V.uicalendar.createEvents(M.getEvents(e.target.value));
 
 });
 
 document.querySelector('#group').addEventListener('change', function (e) {
   V.uicalendar.clear();
-  V.uicalendar.createEvents(M.getEvents(e.target.value));
+  let data = e.target.value.split(',')
+  V.uicalendar.createEvents(M.getEventsByGroup(data[0], data[1]));
 
 });
 
