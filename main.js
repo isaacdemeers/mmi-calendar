@@ -22,8 +22,8 @@ await M.init();
 
 
 // creating events in the calendar
-V.uicalendar.createEvents(M.getEvents('mmi1'));
-V.renderGroups('mmi1', M.Groups);
+V.uicalendar.createEvents(M.getEvents(M.year));
+V.renderGroups(M.year, M.Groups);
 
 
 
@@ -50,14 +50,22 @@ document.querySelector('body').addEventListener('change', function (e) {
   if (e.target.id.includes('year')) {
     V.uicalendar.clear();
     V.renderGroups(e.target.value, M.Groups);
-
+    M.year = e.target.value;
     V.uicalendar.createEvents(M.getEvents(e.target.value));
   }
 
   if (e.target.id.includes('group')) {
     V.uicalendar.clear();
-    let data = e.target.value.split(',')
-    V.uicalendar.createEvents(M.getEventsByGroup(data[0], data[1]));
+    V.uicalendar.createEvents(M.getEventsByGroup(M.year, e.target.value));
+  }
+});
+
+document.querySelector('body').addEventListener('keyup', function (e) {
+
+  if (e.target.id.includes('search')) {
+    console.log(e.target.value);
+    V.uicalendar.clear();
+    V.uicalendar.createEvents(M.filter(M.getEvents(M.year), e.target.value));
   }
 });
 

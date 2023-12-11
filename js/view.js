@@ -31,12 +31,11 @@ V.renderGroups = function (year, groups) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
 
-
-
   groups[year].forEach(group => {
-    html += `<option value=${year},BUT${year.charAt(3)}-${group}>${group}</option>`;
+    html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
   });
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
+
 
 export { V };

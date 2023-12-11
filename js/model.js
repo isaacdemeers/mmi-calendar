@@ -12,6 +12,8 @@ let Events = {
 
 let M = {};
 
+M.year = 'mmi1'
+
 M.Groups = {
     mmi1: ['G1', 'G21', 'G22', 'G3', 'G4'],
     mmi2: ['G1', 'G21', 'G22', 'G3'],
@@ -42,6 +44,30 @@ M.getEventsByGroup = function (annee, group) {
     return null;
 }
 
+
+M.filter = function (events, keywords) {
+
+    if (keywords != '') {
+        keywords = keywords.toLowerCase();
+        return events.filter(event => {
+            for (let keyword of keywords) {
+                const fieldsToCheck = ['title', 'body', 'location'];
+
+                if (fieldsToCheck.some(field => event[field] && event[field].toLowerCase.includes(keyword))) {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+        );
+    }
+    else {
+        return events;
+    }
+
+}
+
 M.init = async function () {
     for (let annee in Events) {
 
@@ -50,11 +76,7 @@ M.init = async function () {
         data = ical.parseICS(data);
         Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
         Events[annee].addEvents(data);
-
-
     }
-
-
 
 }
 
