@@ -18,7 +18,6 @@ M.getEvents = function (annee) {
 }
 
 M.init = async function () {
-    // boucle for qui recuperer la cle et la valeur de chaque element du tableau
     for (let annee in Events) {
 
         let data = await fetch('./data/' + annee + '.ics');

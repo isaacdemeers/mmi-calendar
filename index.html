@@ -1,23 +1,32 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MMI Calendar</title>
-  </head>
-  <body>
-  
-    <div>
-      <header>
-        <nav>
-         
-        </nav>
-      </header>
 
-      <main id="calendar" style="height: 800px"></main>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MMI Calendar</title>
+</head>
 
-    <script type="module" src="/main.js"></script>
-    
-  </body>
+<body>
+
+  <div>
+    <header class="header">
+      <nav class="navbar">
+        <button id="today" class="button today">Aujourd'hui</button>
+        <button id="prev" class="button prev">
+          Avant
+        </button>
+        <button id="next" class="button next">
+          Suivant
+        </button>
+      </nav>
+    </header>
+
+    <main id="calendar" style="height: 800px"></main>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+
+</body>
+
 </html>
