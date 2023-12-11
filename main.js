@@ -21,12 +21,10 @@ await M.init();
 
 
 
-
-
-
 // creating events in the calendar
 V.uicalendar.createEvents(M.getEvents('mmi1'));
-V.setColor();
+V.renderGroups('mmi1', M.Groups);
+
 
 
 
@@ -50,7 +48,13 @@ document.querySelector('body').addEventListener('click', function (e) {
 document.querySelector('#year').addEventListener('change', function (e) {
   V.uicalendar.clear();
   V.uicalendar.createEvents(M.getEvents(e.target.value));
-  V.setColor();
+
+});
+
+document.querySelector('#group').addEventListener('change', function (e) {
+  V.uicalendar.clear();
+  V.uicalendar.createEvents(M.getEvents(e.target.value));
+
 });
 
 

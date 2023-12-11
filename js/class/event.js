@@ -8,8 +8,31 @@ class Event {
     #end;
     #location;
     #groups;
+    #baseColor = {
+        mmi1: {
+            TP: '#edcb92',
+            TD: '#e5b766',
+            CM: '#dea23a',
+            SAE: '#c58821'
+        },
+        mmi2: {
+            TP: '#edcb92',
+            TD: '#e5b766',
+            CM: '#dea23a',
+            SAE: '#c58821'
+        },
 
-    constructor(id, summary, description, start, end, location) {
+        mmi3: {
+            TP: '#edcb92',
+            TD: '#e5b766',
+            CM: '#dea23a',
+            SAE: '#c58821'
+        }
+    };
+    #year;
+
+
+    constructor(id, summary, description, start, end, location, year) {
         this.#id = id;
         this.#summary = summary.slice(0, summary.lastIndexOf(','));
         this.#description = description;
@@ -20,6 +43,7 @@ class Event {
         this.#groups = summary.slice(summary.lastIndexOf(',') + 1);
         this.#groups = this.#groups.split('.');
         this.#groups = this.#groups.map(gr => gr.replace(/\s/g, ""));
+        this.#year = year;
     }
 
     get id() {
@@ -50,6 +74,30 @@ class Event {
         return this.#groups.map(gr => gr); // retourne une copie du tableau
     }
 
+    get type() {
+
+        const colorMap = {
+            'TP': this.#baseColor[this.#year].TP,
+            'TD': this.#baseColor[this.#year].TD,
+            'CM': this.#baseColor[this.#year].CM,
+            'SAÉ': this.#baseColor[this.#year].SAE,
+
+        };
+
+
+        for (let keyword in colorMap) {
+            if (this.#summary.includes(keyword)) {
+                return colorMap[keyword];
+
+            }
+
+        }
+
+        return colorMap['SAÉ']
+
+    }
+
+
     // retourne un objet contenant les informations de l'événement
     // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)
     toObject() {
@@ -60,8 +108,8 @@ class Event {
             start: this.#start,
             end: this.#end,
             location: this.#location,
-            // change la couleur de l'événement en fonction du groupe
-            color: 'gray',
+            backgroundColor: this.type,
+            attendees: this.#groups,
         }
     }
 }

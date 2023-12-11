@@ -27,16 +27,13 @@ V.uicalendar = new Calendar('#calendar', {
 
 });
 
-V.setColor = function () {
-  V.uicalendar.setCalendarColor('mmi1', {
-    backgroundColor: '#d56060',
+V.renderGroups = function (year, groups) {
+  let html = document.querySelector('#group').innerHTML;
+  console.log(groups[year]);
+  groups[year].forEach(group => {
+    html += `<option value="${group}">${group}</option>`;
   });
-  V.uicalendar.setCalendarColor('mmi2', {
-    backgroundColor: '#60d584',
-  });
-  V.uicalendar.setCalendarColor('mmi3', {
-    backgroundColor: '#6095d5',
-  });
+  document.querySelector('#group').innerHTML = html;
 }
 
 export { V };

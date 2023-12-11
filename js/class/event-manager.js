@@ -1,4 +1,4 @@
-import {Event} from './event.js';
+import { Event } from './event.js';
 
 class EventManager {
     #id;
@@ -26,11 +26,11 @@ class EventManager {
     }
 
     addEvents(events) {
-        for(let uid in events) {
+        for (let uid in events) {
             let event = events[uid];
-            this.#events.push(new Event(uid, event.summary, event.description, event.start, event.end, event.location));
+            this.#events.push(new Event(uid, event.summary, event.description, event.start, event.end, event.location, this.#id));
         }
-    }   
+    }
 
     // retourne tous les événements de l'agenda dans un tableau d'objet dont les propriétés sont compatibles avec Toast UI Calendar
     // (voir https://nhn.github.io/tui.calendar/latest/EventObject). On ajoute juste une propriété calendarId pour que Toast UI Calendar
@@ -44,4 +44,4 @@ class EventManager {
     }
 }
 
-export {EventManager};
+export { EventManager };

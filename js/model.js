@@ -8,10 +8,19 @@ let Events = {
     mmi3: null
 }
 
+
+
 let M = {};
+
+M.Groups = {
+    mmi1: ['G1', 'G21', 'G22', 'G3'],
+    mmi2: ['G1', 'G21', 'G22', 'G3'],
+    mmi3: ['G1', 'G21', 'G22', 'G3']
+}
 
 M.getEvents = function (annee) {
     if (annee in Events) {
+
         return Events[annee].toObject();
     }
     else if (annee == 'all') {
@@ -33,7 +42,9 @@ M.init = async function () {
         Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
         Events[annee].addEvents(data);
 
+
     }
+
 
 
 }
