@@ -12,13 +12,13 @@ let M = {};
 
 // GLOBAL VARIABLES FOR COOKIES
 M.years = [];
-M.group = ''
+M.groups = [];
 
 // GROUPS BY YEAR
-M.groups = {
+M.classes = {
     mmi1: ['BUT1-G1', 'BUT1-G21', 'BUT1-G22', 'BUT1-G3', 'BUT1-G41', 'BUT1-G42'],
     mmi2: ['BUT2-G1', 'BUT2-G21', 'BUT2-G22', 'BUT2-G3'],
-    mmi3: ['BUT2-G1', 'BUT2-G21', 'BUT2-G22', 'BUT2-G3']
+    mmi3: ['BUT3-G1', 'BUT3-G21', 'BUT3-G22', 'BUT3-G3']
 }
 
 // INIT
@@ -35,6 +35,11 @@ M.init = async function () {
 
 // GET COOKIES
 M.getCookies = function () {
+
+    // ajoute une correction d'erreur
+    if (document.cookie == '') {
+        return [];
+    }
     let cookies = document.cookie.split(';');
     let data = {};
     cookies.forEach(cookie => {
@@ -46,13 +51,25 @@ M.getCookies = function () {
 }
 
 // SET COOKIES
-M.setCookies = function (year, group) {
+M.setCookies = function (years, groups) {
     let date = new Date();
     date.setFullYear(date.getFullYear() + 1);
     date = date.toUTCString();
-    document.cookie = 'year=' + year; + '; expires=' + date;
-    document.cookie = 'group=' + group; + '; expires=' + date;
+    if (years.length != 0) {
+        document.cookie = 'years=' + years.join(',') + ';expires=' + date;
 
+    }
+    if (groups.length != 0) {
+        document.cookie = 'groups=' + groups.join(',') + ';expires=' + date;
+    }
+
+}
+
+M.delAllCookies = function () {
+    let cookies = M.getCookies();
+    for (let cookie in cookies) {
+        document.cookie = cookie + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
 }
 
 // GET ALL EVENTS
@@ -69,17 +86,19 @@ M.getEventsByYears = function (years) {
     years.forEach(year => {
         events.push(...Events[year].getAllEvents());
     });
+    console.log(years);
     return events;
 }
 
 // GET EVENTS BY GROUP
-M.getEventsByGroup = function (years, group) {
+M.getEventsByGroup = function (years, groups) {
     let events = [];
     years.forEach(year => {
-        events.push(...Events[year].getEventsByGroup(group));
+        events.push(...Events[year].getEventsByGroup(groups));
     });
     return events;
 }
+
 
 // GET EVENTS BY FILTER
 M.getEventsByFilter = function (year, keywords) {

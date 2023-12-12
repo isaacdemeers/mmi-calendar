@@ -44,6 +44,18 @@ V.renderGroups = function (years, groups) {
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
+V.setCookiesPreferences = function (years, groups) {
+  let checkboxes = document.querySelectorAll('.checkbox');
+
+  checkboxes.forEach(checkbox => {
+    if (years.includes(checkbox.id)) {
+      checkbox.checked = true;
+    }
+  });
+
+
+}
+
 V.renderCalendarByYear = function (events) {
   V.uicalendar.clear();
   V.uicalendar.createEvents(events);

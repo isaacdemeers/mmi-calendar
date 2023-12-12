@@ -4,16 +4,28 @@ import { V } from "./js/view.js";
 // INIT
 await M.init();
 
-let cookies = M.getCookies();
-cookies.years = cookies.year || ['mmi1', 'mmi2', 'mmi3'];
-cookies.group = cookies.group || 'all';
 
-M.years = ['mmi1', 'mmi2', 'mmi3']
+let cookies = M.getCookies();
+
+if (cookies.years == undefined) {
+  M.setCookies(['mmi1', 'mmi2', 'mmi3'], []);
+  cookies = M.getCookies();
+}
+if (cookies.groups == undefined) {
+  M.setCookies([], ['all']);
+  cookies = M.getCookies();
+}
+M.years = cookies.years.split(',');
+M.groups = cookies.groups.split(',');
+console.log(cookies);
+
+
 
 //SETUP
 V.testSupport();
-V.uicalendar.createEvents(M.getAllEvents());
-V.renderGroups(M.years, M.groups);
+V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+V.renderGroups(M.years, M.classes);
+V.setCookiesPreferences(M.years, M.groups);
 
 
 // EVENTS LISTENERS CLICKS
@@ -47,8 +59,8 @@ document.querySelector('body').addEventListener('click', function (e) {
     else {
       M.years.splice(M.years.indexOf(e.target.id), 1);
     }
-    M.setCookies(M.years, M.group);
-    V.renderGroups(M.years, M.groups);
+    M.setCookies(M.years, M.groups);
+    V.renderGroups(M.years, M.classes);
     V.renderCalendarByYear(M.getEventsByYears(M.years));
 
   }
@@ -61,11 +73,20 @@ document.querySelector('body').addEventListener('change', function (e) {
 
   // CHANGEMENT DU GROUPE
   if (e.target.id.includes('group')) {
-    M.group = e.target.value;
+    let options = e.target && e.target.options;
+    M.groups = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        M.groups.push(options[i].value);
+      }
+    }
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.group));
+    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
     V.clearSearchBar();
-    M.setCookies(M.years, M.group);
+    M.setCookies(M.years, M.groups);
+
+
+
   }
 
   // CHANGEMENT DE LA VUE
@@ -82,6 +103,6 @@ document.querySelector('body').addEventListener('keyup', function (e) {
   // RENDER DE LA RECHERCHE
   if (e.target.id.includes('search')) {
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
+    V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.years, M.groups), e.target.value));
   }
 });

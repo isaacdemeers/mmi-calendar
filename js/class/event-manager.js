@@ -44,13 +44,23 @@ class EventManager {
         return this.toObject(this.#events);
     }
 
-    getEventsByGroup(group) {
-        if (group == 'all') {
+    getEventsByGroup(groups) {
+        groups = groups.join(' ');
+
+        if (groups.includes('all')) {
             return this.toObject(this.#events);
         }
-
-        return this.toObject(this.#events.filter(event => event.groups.includes(group)));
+        else {
+            let newEvents = [];
+            this.#events.forEach(event => {
+                if (event.groups.join(' ').includes(groups)) {
+                    newEvents.push(event);
+                }
+            });
+            return this.toObject(newEvents);
+        }
     }
+
 
     getEventsByFilter(keywords) {
         if (keywords != '') {
