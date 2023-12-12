@@ -63,18 +63,15 @@ M.setCookies = function (year, group) {
 // GET EVENTS BY YEAR
 M.getEvents = function (annee) {
     if (annee in Events) {
-
         return Events[annee].toObject();
     }
-    else if (annee == 'all') {
+    else {
         let events = [];
         for (let annee in Events) {
             events = events.concat(Events[annee].toObject());
         }
-        M.group = 'all';
         return events;
     }
-    return null;
 }
 
 // GET EVENTS BY YEAR AND GROUP
@@ -88,7 +85,6 @@ M.getEventsByGroup = function (annee, group) {
     else {
         return Events[annee].toObject();
     }
-    return null;
 }
 
 

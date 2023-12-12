@@ -55,7 +55,8 @@ document.querySelector('body').addEventListener('change', function (e) {
     V.uicalendar.createEvents(M.getEvents(e.target.value));
     V.clearSearchBar();
     M.setCookies(M.year, M.group, M.search);
-    V.renderGroups(M.year, M.Groups, M.group);
+    V.renderGroups(M.year, M.Groups);
+    console.log(e.target.value);
   }
 
   // CHANGEMENT DU GROUPE
