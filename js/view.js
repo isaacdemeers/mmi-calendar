@@ -21,17 +21,16 @@ V.uicalendar = new Calendar('#calendar', {
     time: function (event) {
       return `<span style="color: white;">${event.title}</span>`;
     },
-
   },
-
-
 });
 
+
+// RENDER OF THE GROUPS OPTIONS IN THE SELECT
 V.renderGroups = function (year, groups, currentGroup) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
-  groups[year].forEach(group => {
 
+  groups[year].forEach(group => {
     let fullGroup = `BUT${year.charAt(3)}-${group}`;
 
     if (fullGroup == currentGroup) {
@@ -40,11 +39,12 @@ V.renderGroups = function (year, groups, currentGroup) {
     else {
       html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
     }
-
   });
+
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
+// RENDER OF THE YEARS OPTIONS IN THE SELECT
 V.renderYear = function (currentYear, years) {
   let html = '';
   let fisrtChild = document.querySelector('#year').firstElementChild.outerHTML;
@@ -61,17 +61,19 @@ V.renderYear = function (currentYear, years) {
   document.querySelector('#year').innerHTML = fisrtChild + html;
 }
 
+// CLEAR THE SEARCH BAR
 V.clearSearchBar = function () {
   document.querySelector('#search').value = '';
 }
 
+// SET THE VIEW
 V.testSupport = function () {
   const isPhone = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   if (isPhone) {
-    V.uicalendar.changeView('Day');
+    V.uicalendar.changeView('day');
   } else {
-    V.uicalendar.changeView('Week');
+    V.uicalendar.changeView('week');
   }
 }
 

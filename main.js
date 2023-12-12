@@ -1,48 +1,40 @@
 import { M } from "./js/model.js";
 import { V } from "./js/view.js";
 
-/*
-   Ce fichier correspond au contrôleur de l'application. Il est chargé de faire le lien entre le modèle et la vue.
-   Le modèle et la vue sont définis dans les fichiers js/model.js et js/view.js et importés (M et V, parties "publiques") dans ce fichier.
-   Le modèle contient les données (les événements des 3 années de MMI).
-   La vue contient tout ce qui est propre à l'interface et en particulier le composant Toast UI Calendar.
-   Le principe sera toujours le même : le contrôleur va récupérer les données du modèle et les passer à la vue.
-   Toute opération de filtrage des données devra être définie dans le modèle.
-   Et en fonction des actions de l'utilisateur, le contrôleur pourra demander au modèle de lui retourner des données filtrées
-   pour ensuite les passer à la vue pour affichage.
-
-   Exception : Afficher 1, 2 ou les 3 années de formation sans autre filtrage peut être géré uniquement au niveau de la vue.
-   
-*/
-
-
-// loadind data (and wait for it !)
+// INIT
 await M.init();
-
 let cookies = M.getCookies();
-
 M.year = cookies.year;
 M.group = cookies.group;
 
 
-// creating events in the calendar
+//SETUP
+V.testSupport();
+
 V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
 V.renderGroups(M.year, M.Groups, M.group);
 V.renderYear(M.year, M.Groups);
 
 
+// EVENTS LISTENERS CLICKS
 document.querySelector('body').addEventListener('click', function (e) {
+
+  // VUE PRECEDENTE
   if (e.target.id.includes('prev')) {
     V.uicalendar.prev();
   }
 
+  // VUE SUIVANTE
   if (e.target.id.includes('next')) {
     V.uicalendar.next();
   }
 
+  // VUE AUJOURD'HUI
   if (e.target.id.includes('today')) {
     V.uicalendar.today();
   }
+
+  // CLEAR DE LA RECHERCHE
   if (e.target.id.includes('search')) {
     V.clearSearchBar();
     V.uicalendar.clear();
@@ -51,8 +43,11 @@ document.querySelector('body').addEventListener('click', function (e) {
 
 });
 
+
+// EVENTS LISTENERS CHANGE
 document.querySelector('body').addEventListener('change', function (e) {
 
+  // CHANGEMENT DE L'ANNEE
   if (e.target.id.includes('year')) {
     V.uicalendar.clear();
     V.renderGroups(e.target.value, M.Groups);
@@ -60,35 +55,32 @@ document.querySelector('body').addEventListener('change', function (e) {
     V.uicalendar.createEvents(M.getEvents(e.target.value));
     V.clearSearchBar();
     M.setCookies(M.year, M.group, M.search);
-
+    V.renderGroups(M.year, M.Groups, M.group);
   }
 
+  // CHANGEMENT DU GROUPE
   if (e.target.id.includes('group')) {
     V.uicalendar.clear();
     M.group = e.target.value;
     V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
     V.clearSearchBar();
     M.setCookies(M.year, M.group, M.search);
-
   }
 
+  // CHANGEMENT DE LA VUE
   if (e.target.id.includes('time')) {
     V.uicalendar.changeView(e.target.value);
   }
 
 });
 
+
+// EVENTS LISTENERS KEYUP
 document.querySelector('body').addEventListener('keyup', function (e) {
+
+  // RENDER DE LA RECHERCHE
   if (e.target.id.includes('search')) {
     V.uicalendar.clear();
     V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
   }
 });
-
-
-console.log(M.getCookies());
-
-
-
-
-

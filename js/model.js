@@ -8,39 +8,39 @@ let Events = {
     mmi3: null
 }
 
-
-
 let M = {};
 
+// GLOBAL VARIABLES FOR COOKIES
 M.year = 'mmi1'
 M.group = 'all'
 M.search = ''
 
+// GROUPS BY YEAR
 M.Groups = {
     mmi1: ['G1', 'G21', 'G22', 'G3', 'G41', 'G42'],
     mmi2: ['G1', 'G21', 'G22', 'G3'],
     mmi3: ['G1', 'G2', 'G3']
 }
 
+// INIT
 M.init = async function () {
     for (let annee in Events) {
-
         let data = await fetch('./data/' + annee + '.ics');
         data = await data.text();
         data = ical.parseICS(data);
         Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
         Events[annee].addEvents(data);
     }
-
 }
 
-
+// CREATE A DATE FOR COOKIES
 M.getCookiesExpirationDate = function () {
     let date = new Date();
     date.setFullYear(date.getFullYear() + 1);
     return date.toUTCString();
 }
 
+// GET COOKIES
 M.getCookies = function () {
     let cookies = document.cookie.split(';');
     let data = {};
@@ -52,6 +52,7 @@ M.getCookies = function () {
     return data;
 }
 
+// SET COOKIES
 M.setCookies = function (year, group) {
     let date = M.getCookiesExpirationDate();
     document.cookie = 'year=' + year; + '; expires=' + date;
@@ -59,6 +60,7 @@ M.setCookies = function (year, group) {
 
 }
 
+// GET EVENTS BY YEAR
 M.getEvents = function (annee) {
     if (annee in Events) {
 
@@ -69,11 +71,13 @@ M.getEvents = function (annee) {
         for (let annee in Events) {
             events = events.concat(Events[annee].toObject());
         }
+        M.group = 'all';
         return events;
     }
     return null;
 }
 
+// GET EVENTS BY YEAR AND GROUP
 M.getEventsByGroup = function (annee, group) {
     if (group != 'all') {
         if (annee in Events) {
@@ -81,20 +85,16 @@ M.getEventsByGroup = function (annee, group) {
             return events.filter(event => event.attendees.includes(group));
         }
     }
-
     else {
         return Events[annee].toObject();
     }
-
-
     return null;
 }
 
 
+// FILTER EVENTS FOR SEARCH BAR
 M.filter = function (events, keywords) {
-
     M.search = keywords;
-
     if (keywords != '') {
         let newEvents = [];
         keywords = keywords.split(' ');
@@ -106,30 +106,12 @@ M.filter = function (events, keywords) {
             if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
                 newEvents.push(event);
             }
-
         });
-
         return newEvents;
-
     }
     else {
         return events;
     }
-
 }
 
-
-
 export { M };
-
-
-/*
-    On notera que si tout ce qui est dans ce fichier concerne le modèle, seul ce qui est dans M est exporté (et donc accessible depuis l'extérieur).
-    C'est une façon de faire qui permet de garder privé les données "réelles" qui sont dans Events mais dont la visibilité est limitée à ce module/fichier.
-    Donc il faut voir M comme la partie publique de la vue et le reste comme la partie privée.
-    C'est sensiblement différent de ce qu'on faisait jusqu'à présent où tout était dans l'objet M.
-    L'utilisation des modules javascript nous permet ici de choisir ce que l'on veut rendre public ou privé.
-    C'est une autre façon d'implémenter le concept d'encapsulation sans avoir à utiliser les classes.
-    A noter qu'on aurait pu faire une classe "Model" mais dans la mesure où l'on n'aurait qu'une seule instance de Model, ce n'est pas vraiment utile.
-    
-*/
