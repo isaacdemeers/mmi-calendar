@@ -11,26 +11,26 @@ class Event {
     #groups;
     #baseColor = {
         mmi1: {
-            TP: '#edcb92',
-            TD: '#e5b766',
-            CM: '#dea23a',
-            SAE: '#c58821',
-            UNDEFINED: '#c58821'
+            TP: '#edc792',
+            TD: '#de993a',
+            CM: '#99631a',
+            SAE: '#6d4712',
+            UNDEFINED: '#6d4712'
         },
         mmi2: {
-            TP: '#edcb92',
-            TD: '#e5b766',
-            CM: '#dea23a',
-            SAE: '#c58821',
-            UNDEFINED: '#c58821'
+            TP: '#92b9ed',
+            TD: '#3a81de',
+            CM: '#1a5099',
+            SAE: '#12396d',
+            UNDEFINED: '#12396d'
         },
 
         mmi3: {
-            TP: '#edcb92',
-            TD: '#e5b766',
-            CM: '#dea23a',
-            SAE: '#c58821',
-            UNDEFINED: '#c58821'
+            TP: '#d492ed',
+            TD: '#b23ade',
+            CM: '#771a99',
+            SAE: '#55126d',
+            UNDEFINED: '#55126d'
         }
     };
     #year;

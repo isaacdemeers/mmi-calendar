@@ -79,15 +79,20 @@ M.getEvents = function (annee) {
 
 // GET EVENTS BY YEAR AND GROUP
 M.getEventsByGroup = function (annee, group) {
-    if (group != 'all') {
-        if (annee in Events) {
-            let events = Events[annee].toObject();
-            return events.filter(event => event.attendees.includes(group));
+    if (annee != 'all') {
+
+        if (group != 'all') {
+            if (annee in Events) {
+                let events = Events[annee].toObject();
+                return events.filter(event => event.attendees.includes(group));
+            }
+        }
+        else {
+            return Events[annee].toObject();
         }
     }
-    else {
-        return Events[annee].toObject();
-    }
+
+
     return null;
 }
 
