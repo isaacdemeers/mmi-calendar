@@ -27,12 +27,38 @@ V.uicalendar = new Calendar('#calendar', {
 
 });
 
-V.renderGroups = function (year, groups) {
+V.renderGroups = function (year, groups, currentGroup) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
-
   groups[year].forEach(group => {
-    html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+
+    let fullGroup = `BUT${year.charAt(3)}-${group}`;
+
+    if (fullGroup == currentGroup) {
+      html += `<option value=${fullGroup} selected>${group}</option>`;
+    }
+    else {
+      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+    }
+
+  });
+  document.querySelector('#group').innerHTML = fisrtChild + html;
+}
+
+V.renderYear = function (year, groups, currentGroup) {
+  let html = '';
+  let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
+  groups[year].forEach(group => {
+
+    let fullGroup = `BUT${year.charAt(3)}-${group}`;
+
+    if (fullGroup == currentGroup) {
+      html += `<option value=${fullGroup} selected>${group}</option>`;
+    }
+    else {
+      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+    }
+
   });
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }

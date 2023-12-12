@@ -22,6 +22,43 @@ M.Groups = {
     mmi3: ['G1', 'G2', 'G3']
 }
 
+M.init = async function () {
+    for (let annee in Events) {
+
+        let data = await fetch('./data/' + annee + '.ics');
+        data = await data.text();
+        data = ical.parseICS(data);
+        Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
+        Events[annee].addEvents(data);
+    }
+
+}
+
+
+M.getCookiesExpirationDate = function () {
+    let date = new Date();
+    date.setFullYear(date.getFullYear() + 1);
+    return date.toUTCString();
+}
+
+M.getCookies = function () {
+    let cookies = document.cookie.split(';');
+    let data = {};
+    cookies.forEach(cookie => {
+        let key = cookie.split('=')[0].trim();
+        let value = cookie.split('=')[1].trim();
+        data[key] = value;
+    });
+    return data;
+}
+
+M.setCookies = function (year, group) {
+    let date = M.getCookiesExpirationDate();
+    document.cookie = 'year=' + year; + '; expires=' + date;
+    document.cookie = 'group=' + group; + '; expires=' + date;
+
+}
+
 M.getEvents = function (annee) {
     if (annee in Events) {
 
@@ -81,17 +118,7 @@ M.filter = function (events, keywords) {
 
 }
 
-M.init = async function () {
-    for (let annee in Events) {
 
-        let data = await fetch('./data/' + annee + '.ics');
-        data = await data.text();
-        data = ical.parseICS(data);
-        Events[annee] = new EventManager(annee, annee, 'Agenda des ' + annee);
-        Events[annee].addEvents(data);
-    }
-
-}
 
 export { M };
 

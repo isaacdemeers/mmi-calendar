@@ -19,11 +19,15 @@ import { V } from "./js/view.js";
 // loadind data (and wait for it !)
 await M.init();
 
+let cookies = M.getCookies();
+
+M.year = cookies.year;
+M.group = cookies.group;
 
 
 // creating events in the calendar
-V.uicalendar.createEvents(M.getEvents(M.year));
-V.renderGroups(M.year, M.Groups);
+V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
+V.renderGroups(M.year, M.Groups, M.group);
 
 
 
@@ -60,6 +64,7 @@ document.querySelector('body').addEventListener('change', function (e) {
     M.year = e.target.value;
     V.uicalendar.createEvents(M.getEvents(e.target.value));
     V.clearSearchBar();
+    M.setCookies(M.year, M.group, M.search);
 
   }
 
@@ -68,6 +73,7 @@ document.querySelector('body').addEventListener('change', function (e) {
     M.group = e.target.value;
     V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
     V.clearSearchBar();
+    M.setCookies(M.year, M.group, M.search);
 
   }
 
@@ -78,13 +84,14 @@ document.querySelector('body').addEventListener('change', function (e) {
 });
 
 document.querySelector('body').addEventListener('keyup', function (e) {
-
   if (e.target.id.includes('search')) {
-    console.log(e.target.value);
     V.uicalendar.clear();
     V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
   }
 });
+
+
+console.log(M.getCookies());
 
 
 
