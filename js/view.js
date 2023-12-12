@@ -25,60 +25,30 @@ V.uicalendar = new Calendar('#calendar', {
 });
 
 
-// RENDER OF THE SELECTED 
-V.selectGroups = function (year, groups, currentGroup) {
+// RENDER GROUPS IN THE SELECT
+V.renderGroups = function (years, groups) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
+  let disabled = '<option disabled>—— {{year}} ——</option>';
 
-  if (year != 'all') {
-    groups[year].forEach(group => {
-      let fullGroup = `BUT${year.charAt(3)}-${group}`;
+  for (let year in groups) {
+    if (years.includes(year)) {
+      html += disabled.replace('{{year}}', year.toUpperCase());
+      groups[year].forEach(group => {
+        html += `<option value="${group}">${group}</option>`;
+      });
+    }
+  }
 
-      if (fullGroup == currentGroup) {
-        html += `<option value=${fullGroup} selected>${group}</option>`;
-      }
-      else {
-        html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
-      }
-    });
-  }
-  else {
-    V.renderGroups(year, groups);
-  }
 
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
-V.renderGroups = function (year, groups) {
-  let html = '';
-  let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
-
-  if (year != 'all') {
-    groups[year].forEach(group => {
-      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
-    });
-  }
-
-  document.querySelector('#group').innerHTML = fisrtChild + html;
+V.renderCalendarByYear = function (events) {
+  V.uicalendar.clear();
+  V.uicalendar.createEvents(events);
 }
 
-// RENDER OF THE YEARS OPTIONS IN THE SELECT
-V.renderYear = function (currentYear, years) {
-  let html = '';
-  let fisrtChild = document.querySelector('#year').firstElementChild.outerHTML;
-  for (const year in years) {
-
-    if (year == currentYear) {
-      html += `<option value=${year} selected>${year.toUpperCase()}</option>`;
-    }
-    else {
-      html += `<option value=${year}>${year.toUpperCase()}</option>`;
-    }
-
-  }
-
-  document.querySelector('#year').innerHTML = fisrtChild + html;
-}
 
 // CLEAR THE SEARCH BAR
 V.clearSearchBar = function () {

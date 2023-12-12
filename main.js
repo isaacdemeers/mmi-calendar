@@ -3,17 +3,17 @@ import { V } from "./js/view.js";
 
 // INIT
 await M.init();
-let cookies = M.getCookies();
-M.year = cookies.year;
-M.group = cookies.group;
 
+let cookies = M.getCookies();
+cookies.years = cookies.year || ['mmi1', 'mmi2', 'mmi3'];
+cookies.group = cookies.group || 'all';
+
+M.years = ['mmi1', 'mmi2', 'mmi3']
 
 //SETUP
 V.testSupport();
-
-V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
-V.renderYear(M.year, M.Groups);
-V.selectGroups(M.year, M.Groups, M.group);
+V.uicalendar.createEvents(M.getAllEvents());
+V.renderGroups(M.years, M.groups);
 
 
 // EVENTS LISTENERS CLICKS
@@ -38,7 +38,19 @@ document.querySelector('body').addEventListener('click', function (e) {
   if (e.target.id.includes('search')) {
     V.clearSearchBar();
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
+  }
+
+  if (e.target.classList.contains('checkbox')) {
+    if (e.target.checked) {
+      M.years.push(e.target.id);
+    }
+    else {
+      M.years.splice(M.years.indexOf(e.target.id), 1);
+    }
+    M.setCookies(M.years, M.group);
+    V.renderGroups(M.years, M.groups);
+    V.renderCalendarByYear(M.getEventsByYears(M.years));
+
   }
 
 });
@@ -47,25 +59,13 @@ document.querySelector('body').addEventListener('click', function (e) {
 // EVENTS LISTENERS CHANGE
 document.querySelector('body').addEventListener('change', function (e) {
 
-  // CHANGEMENT DE L'ANNEE
-  if (e.target.id.includes('year')) {
-    V.uicalendar.clear();
-    V.renderGroups(e.target.value, M.Groups);
-    M.year = e.target.value;
-    V.uicalendar.createEvents(M.getEvents(e.target.value));
-    V.clearSearchBar();
-    M.setCookies(M.year, M.group, M.search);
-    V.renderGroups(M.year, M.Groups);
-    console.log(e.target.value);
-  }
-
   // CHANGEMENT DU GROUPE
   if (e.target.id.includes('group')) {
-    V.uicalendar.clear();
     M.group = e.target.value;
-    V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
+    V.uicalendar.clear();
+    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.group));
     V.clearSearchBar();
-    M.setCookies(M.year, M.group, M.search);
+    M.setCookies(M.years, M.group);
   }
 
   // CHANGEMENT DE LA VUE

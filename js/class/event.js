@@ -78,26 +78,16 @@ class Event {
     }
 
     get type() {
-
-        const colorMap = {
-            'TP': this.#baseColor[this.#year].TP,
-            'TD': this.#baseColor[this.#year].TD,
-            'CM': this.#baseColor[this.#year].CM,
-            'SAÉ': this.#baseColor[this.#year].SAE,
-
-        };
-
-
-        for (let keyword in colorMap) {
-            if (this.#summary.includes(keyword)) {
-                return colorMap[keyword];
-
+        for (let year in this.#baseColor) {
+            if (year == this.#year) {
+                for (let keyword in this.#baseColor[year]) {
+                    if (this.#summary.includes(keyword)) {
+                        return this.#baseColor[year][keyword];
+                    }
+                }
+                return this.#baseColor[year]['UNDEFINED'];
             }
-
         }
-
-        return colorMap['SAÉ']
-
     }
     // retourne un objet contenant les informations de l'événement
     // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)

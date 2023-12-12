@@ -11,15 +11,14 @@ let Events = {
 let M = {};
 
 // GLOBAL VARIABLES FOR COOKIES
-M.year = 'mmi1'
-M.group = 'all'
-M.search = ''
+M.years = [];
+M.group = ''
 
 // GROUPS BY YEAR
-M.Groups = {
-    mmi1: ['G1', 'G21', 'G22', 'G3', 'G41', 'G42'],
-    mmi2: ['G1', 'G21', 'G22', 'G3'],
-    mmi3: ['G1', 'G2', 'G3']
+M.groups = {
+    mmi1: ['BUT1-G1', 'BUT1-G21', 'BUT1-G22', 'BUT1-G3', 'BUT1-G41', 'BUT1-G42'],
+    mmi2: ['BUT2-G1', 'BUT2-G21', 'BUT2-G22', 'BUT2-G3'],
+    mmi3: ['BUT2-G1', 'BUT2-G21', 'BUT2-G22', 'BUT2-G3']
 }
 
 // INIT
@@ -33,12 +32,6 @@ M.init = async function () {
     }
 }
 
-// CREATE A DATE FOR COOKIES
-M.getCookiesExpirationDate = function () {
-    let date = new Date();
-    date.setFullYear(date.getFullYear() + 1);
-    return date.toUTCString();
-}
 
 // GET COOKIES
 M.getCookies = function () {
@@ -54,61 +47,43 @@ M.getCookies = function () {
 
 // SET COOKIES
 M.setCookies = function (year, group) {
-    let date = M.getCookiesExpirationDate();
+    let date = new Date();
+    date.setFullYear(date.getFullYear() + 1);
+    date = date.toUTCString();
     document.cookie = 'year=' + year; + '; expires=' + date;
     document.cookie = 'group=' + group; + '; expires=' + date;
 
 }
 
-// GET EVENTS BY YEAR
-M.getEvents = function (annee) {
-    if (annee in Events) {
-        return Events[annee].toObject();
+// GET ALL EVENTS
+M.getAllEvents = function () {
+    let events = [];
+    for (let annee in Events) {
+        events.push(...Events[annee].getAllEvents());
     }
-    else {
-        let events = [];
-        for (let annee in Events) {
-            events = events.concat(Events[annee].toObject());
-        }
-        return events;
-    }
+    return events;
 }
 
-// GET EVENTS BY YEAR AND GROUP
-M.getEventsByGroup = function (annee, group) {
-    console.log(annee, group);
-    if (group != 'all') {
-        if (annee in Events) {
-            let events = Events[annee].toObject();
-            return events.filter(event => event.attendees.includes(group));
-        }
-    }
-    else {
-        return M.getEvents(annee);
-    }
+M.getEventsByYears = function (years) {
+    let events = [];
+    years.forEach(year => {
+        events.push(...Events[year].getAllEvents());
+    });
+    return events;
 }
 
+// GET EVENTS BY GROUP
+M.getEventsByGroup = function (years, group) {
+    let events = [];
+    years.forEach(year => {
+        events.push(...Events[year].getEventsByGroup(group));
+    });
+    return events;
+}
 
-// FILTER EVENTS FOR SEARCH BAR
-M.filter = function (events, keywords) {
-    M.search = keywords;
-    if (keywords != '') {
-        let newEvents = [];
-        keywords = keywords.split(' ');
-
-        events.forEach(event => {
-            let data = event.title + event.location + event.body + event.attendees.join(' ');
-            data = data.toLowerCase();
-
-            if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
-                newEvents.push(event);
-            }
-        });
-        return newEvents;
-    }
-    else {
-        return events;
-    }
+// GET EVENTS BY FILTER
+M.getEventsByFilter = function (year, keywords) {
+    return Events[year].getEventsByFilter(keywords);
 }
 
 export { M };
