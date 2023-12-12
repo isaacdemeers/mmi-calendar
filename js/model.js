@@ -14,6 +14,7 @@ let M = {};
 
 M.year = 'mmi1'
 M.group = 'all'
+M.search = ''
 
 M.Groups = {
     mmi1: ['G1', 'G21', 'G22', 'G3', 'G41', 'G42'],
@@ -37,7 +38,6 @@ M.getEvents = function (annee) {
 }
 
 M.getEventsByGroup = function (annee, group) {
-    console.log(annee, group);
     if (group != 'all') {
         if (annee in Events) {
             let events = Events[annee].toObject();
@@ -46,7 +46,6 @@ M.getEventsByGroup = function (annee, group) {
     }
 
     else {
-        console.log('all');
         return Events[annee].toObject();
     }
 
@@ -56,6 +55,8 @@ M.getEventsByGroup = function (annee, group) {
 
 
 M.filter = function (events, keywords) {
+
+    M.search = keywords;
 
     if (keywords != '') {
         let newEvents = [];

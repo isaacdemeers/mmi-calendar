@@ -44,6 +44,11 @@ document.querySelector('body').addEventListener('click', function (e) {
   if (e.target.id.includes('today')) {
     V.uicalendar.today();
   }
+  if (e.target.id.includes('search')) {
+    V.clearSearchBar();
+    V.uicalendar.clear();
+    V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
+  }
 
 });
 
@@ -69,7 +74,7 @@ document.querySelector('body').addEventListener('change', function (e) {
   if (e.target.id.includes('time')) {
     V.uicalendar.changeView(e.target.value);
   }
-  ""
+
 });
 
 document.querySelector('body').addEventListener('keyup', function (e) {
