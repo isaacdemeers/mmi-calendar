@@ -26,25 +26,32 @@ V.uicalendar = new Calendar('#calendar', {
 
 
 // RENDER OF THE GROUPS OPTIONS IN THE SELECT
+V.selectGroups = function (year, groups, currentGroup) {
+  let html = '';
+  let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
+
+  groups[year].forEach(group => {
+    let fullGroup = `BUT${year.charAt(3)}-${group}`;
+
+    if (fullGroup == currentGroup) {
+      html += `<option value=${fullGroup} selected>${group}</option>`;
+    }
+    else {
+      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+    }
+  });
+
+  document.querySelector('#group').innerHTML = fisrtChild + html;
+}
 V.renderGroups = function (year, groups, currentGroup) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
 
-  if (year != 'all') {
-    groups[year].forEach(group => {
-      let fullGroup = `BUT${year.charAt(3)}-${group}`;
+  groups[year].forEach(group => {
+    html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+  });
 
-      if (fullGroup == currentGroup) {
-        html += `<option value=${fullGroup} selected>${group}</option>`;
-      }
-      else {
-        html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
-      }
-    });
-
-    document.querySelector('#group').innerHTML = fisrtChild + html;
-  }
-
+  document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
 // RENDER OF THE YEARS OPTIONS IN THE SELECT

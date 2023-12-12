@@ -1,4 +1,3 @@
-import { M } from "../model";
 
 
 class Event {
@@ -79,18 +78,31 @@ class Event {
     }
 
     get type() {
-        for (let year in this.#baseColor) {
-            if (year == this.#year) {
-                for (let keyword in this.#baseColor[year]) {
-                    if (this.#summary.includes(keyword)) {
-                        return this.#baseColor[year][keyword];
-                    }
-                }
-                return this.#baseColor[year]['UNDEFINED'];
+
+        const colorMap = {
+            'TP': this.#baseColor[this.#year].TP,
+            'TD': this.#baseColor[this.#year].TD,
+            'CM': this.#baseColor[this.#year].CM,
+            'SAÉ': this.#baseColor[this.#year].SAE,
+
+        };
+
+
+        for (let keyword in colorMap) {
+            if (this.#summary.includes(keyword)) {
+                return colorMap[keyword];
+
             }
+
         }
+
+        return colorMap['SAÉ']
+
     }
 
+
+    // retourne un objet contenant les informations de l'événement
+    // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)
     toObject() {
         return {
             id: this.#id,
@@ -101,7 +113,7 @@ class Event {
             location: this.#location,
             backgroundColor: this.type,
             attendees: this.#groups,
-            borderColor: 'none',
+            borderColor: "#",
         }
     }
 }

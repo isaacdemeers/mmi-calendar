@@ -12,7 +12,7 @@ M.group = cookies.group;
 V.testSupport();
 
 V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
-V.renderGroups(M.year, M.Groups, M.group);
+V.selectGroups(M.year, M.Groups, M.group);
 V.renderYear(M.year, M.Groups);
 
 
