@@ -28,12 +28,7 @@ M.group = cookies.group;
 // creating events in the calendar
 V.uicalendar.createEvents(M.getEventsByGroup(M.year, M.group));
 V.renderGroups(M.year, M.Groups, M.group);
-
-
-
-
-
-
+V.renderYear(M.year, M.Groups);
 
 
 document.querySelector('body').addEventListener('click', function (e) {

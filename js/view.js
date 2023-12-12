@@ -45,22 +45,20 @@ V.renderGroups = function (year, groups, currentGroup) {
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
-V.renderYear = function (year, groups, currentGroup) {
+V.renderYear = function (currentYear, years) {
   let html = '';
-  let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
-  groups[year].forEach(group => {
+  let fisrtChild = document.querySelector('#year').firstElementChild.outerHTML;
+  for (const year in years) {
 
-    let fullGroup = `BUT${year.charAt(3)}-${group}`;
-
-    if (fullGroup == currentGroup) {
-      html += `<option value=${fullGroup} selected>${group}</option>`;
+    if (year == currentYear) {
+      html += `<option value=${year} selected>${year.toUpperCase()}</option>`;
     }
     else {
-      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+      html += `<option value=${year}>${year.toUpperCase()}</option>`;
     }
 
-  });
-  document.querySelector('#group').innerHTML = fisrtChild + html;
+  }
+  document.querySelector('#year').innerHTML = fisrtChild + html;
 }
 
 V.clearSearchBar = function () {
@@ -76,6 +74,7 @@ V.testSupport = function () {
     V.uicalendar.changeView('Week');
   }
 }
+
 
 
 export { V };
