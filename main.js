@@ -30,6 +30,8 @@ V.renderGroups(M.year, M.Groups);
 
 
 
+
+
 document.querySelector('body').addEventListener('click', function (e) {
   if (e.target.id.includes('prev')) {
     V.uicalendar.prev();
@@ -67,7 +69,7 @@ document.querySelector('body').addEventListener('change', function (e) {
   if (e.target.id.includes('time')) {
     V.uicalendar.changeView(e.target.value);
   }
-
+  ""
 });
 
 document.querySelector('body').addEventListener('keyup', function (e) {
@@ -78,6 +80,8 @@ document.querySelector('body').addEventListener('keyup', function (e) {
     V.uicalendar.createEvents(M.filter(M.getEventsByGroup(M.year, M.group), e.target.value));
   }
 });
+
+
 
 
 

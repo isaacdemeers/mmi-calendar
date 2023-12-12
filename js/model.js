@@ -16,7 +16,7 @@ M.year = 'mmi1'
 M.group = 'all'
 
 M.Groups = {
-    mmi1: ['G1', 'G21', 'G22', 'G3', 'G4'],
+    mmi1: ['G1', 'G21', 'G22', 'G3', 'G41', 'G42'],
     mmi2: ['G1', 'G21', 'G22', 'G3'],
     mmi3: ['G1', 'G2', 'G3']
 }

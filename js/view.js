@@ -41,5 +41,15 @@ V.clearSearchBar = function () {
   document.querySelector('#search').value = '';
 }
 
+V.testSupport = function () {
+  const isPhone = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  if (isPhone) {
+    V.uicalendar.changeView('Day');
+  } else {
+    V.uicalendar.changeView('Week');
+  }
+}
+
 
 export { V };
