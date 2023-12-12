@@ -25,21 +25,26 @@ V.uicalendar = new Calendar('#calendar', {
 });
 
 
-// RENDER OF THE SELECTED GROUP
+// RENDER OF THE SELECTED 
 V.selectGroups = function (year, groups, currentGroup) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
 
-  groups[year].forEach(group => {
-    let fullGroup = `BUT${year.charAt(3)}-${group}`;
+  if (year != 'all') {
+    groups[year].forEach(group => {
+      let fullGroup = `BUT${year.charAt(3)}-${group}`;
 
-    if (fullGroup == currentGroup) {
-      html += `<option value=${fullGroup} selected>${group}</option>`;
-    }
-    else {
-      html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
-    }
-  });
+      if (fullGroup == currentGroup) {
+        html += `<option value=${fullGroup} selected>${group}</option>`;
+      }
+      else {
+        html += `<option value=BUT${year.charAt(3)}-${group}>${group}</option>`;
+      }
+    });
+  }
+  else {
+    V.renderGroups(year, groups);
+  }
 
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
@@ -71,6 +76,7 @@ V.renderYear = function (currentYear, years) {
     }
 
   }
+
   document.querySelector('#year').innerHTML = fisrtChild + html;
 }
 

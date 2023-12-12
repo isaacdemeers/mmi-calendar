@@ -76,6 +76,7 @@ M.getEvents = function (annee) {
 
 // GET EVENTS BY YEAR AND GROUP
 M.getEventsByGroup = function (annee, group) {
+    console.log(annee, group);
     if (group != 'all') {
         if (annee in Events) {
             let events = Events[annee].toObject();
@@ -83,7 +84,7 @@ M.getEventsByGroup = function (annee, group) {
         }
     }
     else {
-        return Events[annee].toObject();
+        return M.getEvents(annee);
     }
 }
 
