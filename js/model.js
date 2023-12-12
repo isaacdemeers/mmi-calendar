@@ -62,7 +62,7 @@ M.filter = function (events, keywords) {
         keywords = keywords.split(' ');
 
         events.forEach(event => {
-            let data = event.title + event.location + event.body;
+            let data = event.title + event.location + event.body + event.attendees.join(' ');
             data = data.toLowerCase();
 
             if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {

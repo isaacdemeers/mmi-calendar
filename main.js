@@ -64,6 +64,10 @@ document.querySelector('body').addEventListener('change', function (e) {
 
   }
 
+  if (e.target.id.includes('time')) {
+    V.uicalendar.changeView(e.target.value);
+  }
+
 });
 
 document.querySelector('body').addEventListener('keyup', function (e) {
