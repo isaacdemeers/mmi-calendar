@@ -101,8 +101,14 @@ M.getEventsByGroup = function (years, groups) {
 
 
 // GET EVENTS BY FILTER
-M.getEventsByFilter = function (year, keywords) {
-    return Events[year].getEventsByFilter(keywords);
+M.getEventsByFilter = function (years, keywords) {
+
+    console.log(years);
+    let events = [];
+    years.forEach(year => {
+        events.push(...Events[year].getEventsByFilter(keywords));
+    });
+    return events;
 }
 
 export { M };

@@ -44,7 +44,7 @@ V.renderGroups = function (years, groups) {
   document.querySelector('#group').innerHTML = fisrtChild + html;
 }
 
-V.setCookiesPreferences = function (years, groups) {
+V.setCookiesPreferences = function (years) {
   let checkboxes = document.querySelectorAll('.checkbox');
 
   checkboxes.forEach(checkbox => {
@@ -55,12 +55,6 @@ V.setCookiesPreferences = function (years, groups) {
 
 
 }
-
-V.renderCalendarByYear = function (events) {
-  V.uicalendar.clear();
-  V.uicalendar.createEvents(events);
-}
-
 
 // CLEAR THE SEARCH BAR
 V.clearSearchBar = function () {

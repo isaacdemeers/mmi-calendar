@@ -45,7 +45,6 @@ class EventManager {
     }
 
     getEventsByGroup(groups) {
-        groups = groups.join(' ');
 
         if (groups.includes('all')) {
             return this.toObject(this.#events);
@@ -53,9 +52,13 @@ class EventManager {
         else {
             let newEvents = [];
             this.#events.forEach(event => {
-                if (event.groups.join(' ').includes(groups)) {
-                    newEvents.push(event);
-                }
+
+                groups.forEach(group => {
+
+                    if (event.groups.join(' ').includes(group) && !newEvents.includes(event)) {
+                        newEvents.push(event);
+                    }
+                });
             });
             return this.toObject(newEvents);
         }
@@ -63,12 +66,13 @@ class EventManager {
 
 
     getEventsByFilter(keywords) {
+        console.log(keywords);
         if (keywords != '') {
             let newEvents = [];
             keywords = keywords.split(' ');
-
             this.#events.forEach(event => {
-                let data = event.title + event.location + event.body + event.attendees.join(' ');
+                console.log(event);
+                let data = event.summary + event.location + event.description + event.groups.join(' ');
                 data = data.toLowerCase();
 
                 if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
