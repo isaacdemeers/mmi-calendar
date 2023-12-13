@@ -17,9 +17,16 @@ V.uicalendar = new Calendar('#calendar', {
     taskView: false,
     eventView: ['time'],
   },
+  month: {
+    startDayOfWeek: 1,
+    dayNames: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+    workweek: true,
+    taskView: false,
+    eventView: ['time'],
+  },
   template: {
     time: function (event) {
-      return `<span style="color: white;">${event.title}</span>`;
+      return `<span style="color: black;">${event.title}</span>`;
     },
   },
 });

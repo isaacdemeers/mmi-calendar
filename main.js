@@ -4,8 +4,9 @@ import { V } from "./js/view.js";
 // INIT
 await M.init();
 
-
+// COOKIES SETUP
 let cookies = M.getCookies();
+
 let defaultCookies = {
   years: ['mmi1', 'mmi2', 'mmi3'],
   groups: ['all']
@@ -55,6 +56,9 @@ document.querySelector('body').addEventListener('click', function (e) {
   // CLEAR SEARCH BAR
   if (e.target.id.includes('search')) {
     V.clearSearchBar();
+    V.uicalendar.clear();
+    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+
   }
 
   // YEARS CHECKBOXES
