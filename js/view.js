@@ -26,16 +26,21 @@ V.uicalendar = new Calendar('#calendar', {
 
 
 // RENDER GROUPS IN THE SELECT
-V.renderGroups = function (years, groups) {
+V.renderGroups = function (years, classes, groups) {
   let html = '';
   let fisrtChild = document.querySelector('#group').firstElementChild.outerHTML;
   let disabled = '<option disabled>—— {{year}} ——</option>';
 
-  for (let year in groups) {
+  for (let year in classes) {
     if (years.includes(year)) {
       html += disabled.replace('{{year}}', year.toUpperCase());
-      groups[year].forEach(group => {
-        html += `<option value="${group}">${group}</option>`;
+      classes[year].forEach(group => {
+        if (groups && groups.includes(group)) {
+          html += `<option value="${group}" selected>${group}</option>`;
+        }
+        else {
+          html += `<option value="${group}">${group}</option>`;
+        }
       });
     }
   }

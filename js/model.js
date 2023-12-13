@@ -13,6 +13,7 @@ let M = {};
 // GLOBAL VARIABLES FOR COOKIES
 M.years = [];
 M.groups = [];
+M.search = '';
 
 // GROUPS BY YEAR
 M.classes = {
@@ -109,6 +110,27 @@ M.getEventsByFilter = function (years, keywords) {
         events.push(...Events[year].getEventsByFilter(keywords));
     });
     return events;
+}
+
+// FILTER GIVEN EVENTS
+M.filterEvents = function (events, keywords) {
+    if (keywords != '') {
+        let newEvents = [];
+        keywords = keywords.split(' ');
+        events.forEach(event => {
+            let data = event.title + event.location + event.body + event.attendees.join(' ');
+            data = data.toLowerCase();
+
+            if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
+                newEvents.push(event);
+            }
+        });
+        return newEvents;
+    }
+    else {
+        return events;
+    }
+
 }
 
 export { M };

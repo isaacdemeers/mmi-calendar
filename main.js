@@ -24,7 +24,7 @@ console.log(cookies);
 //SETUP
 V.testSupport();
 V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
-V.renderGroups(M.years, M.classes);
+V.renderGroups(M.years, M.classes, M.groups);
 V.setCookiesPreferences(M.years);
 
 
@@ -70,9 +70,15 @@ document.querySelector('body').addEventListener('click', function (e) {
 
     }
     M.setCookies(M.years, M.groups);
-    V.renderGroups(M.years, M.classes);
+    V.renderGroups(M.years, M.classes, M.groups);
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+    console.log(M.search);
+    if (M.search == '') {
+      V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+    }
+    else {
+      V.uicalendar.createEvents(M.getEventsByFilter(M.years, M.search));
+    }
 
   }
 
@@ -92,9 +98,14 @@ document.querySelector('body').addEventListener('change', function (e) {
       }
     }
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
-    V.clearSearchBar();
     M.setCookies(M.years, M.groups);
+
+    if (M.search == '') {
+      V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+    }
+    else {
+      V.uicalendar.createEvents(M.filterEvents(M.getEventsByGroup(M.years, M.groups), M.search));
+    }
 
 
 
@@ -116,5 +127,6 @@ document.querySelector('body').addEventListener('keyup', function (e) {
     V.uicalendar.clear();
     console.log(e.target.value);
     V.uicalendar.createEvents(M.getEventsByFilter(M.years, e.target.value));
+    M.search = e.target.value;
   }
 });

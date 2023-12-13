@@ -66,12 +66,10 @@ class EventManager {
 
 
     getEventsByFilter(keywords) {
-        console.log(keywords);
         if (keywords != '') {
             let newEvents = [];
             keywords = keywords.split(' ');
             this.#events.forEach(event => {
-                console.log(event);
                 let data = event.summary + event.location + event.description + event.groups.join(' ');
                 data = data.toLowerCase();
 
