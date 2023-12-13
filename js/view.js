@@ -30,6 +30,7 @@ V.uicalendar = new Calendar('#calendar', {
     time: function (event) {
       return `<span style="color: black;">${event.title}</span>`;
     },
+
   },
 });
 

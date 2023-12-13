@@ -6,61 +6,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MMI Calendar</title>
   <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body>
 
-  <div>
-    <header class="header">
-      <nav class="navbar">
-
-        <div class="box">
-          <button id="prev" class="button prev">Précédent</button>
-          <button id="today" class="button today">Aujourd'hui</button>
-          <button id="next" class="button next">Suivant</button>
-
-          <select name="time" id="time">
-            <option value="day">Jour</option>
-            <option value="week" selected>Semaine</option>
-            <option value="month">Mois</option>
-          </select>
-        </div>
-
-
-        <ul class="box">
-          <li class="checkboxItem">
-            <input type="checkbox" name="mmi1" id="mmi1" class="checkbox">
-            <label for="mmi1">MMI 1</label>
-          </li>
-          <li class="checkboxItem">
-            <input type="checkbox" name="mmi2" id="mmi2" class="checkbox">
-            <label for="mmi2">MMI 2</label>
-          </li>
-          <li class="checkboxItem">
-            <input type="checkbox" name="mmi3" id="mmi3" class="checkbox">
-            <label for="mmi3">MMI 3</label>
-          </li>
-        </ul>
-
-
-
-
-
-        <div class="box">
-          <select name="group" id="group" multiple>
-            <option value="all">TOUS</option>
-          </select>
-        </div>
-
-        <div class="box">
-          <input type="search" name="search" id="search" placeholder="Rechercher">
-
-        </div>
-      </nav>
-    </header>
-
-    <main id="calendar" style="height: 800px"></main>
+  <div id="mobileOpen" class="mobileOpen mO">
+    <span class="material-symbols-outlined mO">
+      menu
+    </span>
   </div>
+
+  <nav class="navbar">
+
+    <div id="mobileClose" class="mobileClose mC">
+      <span class="material-symbols-outlined mC">
+        close
+      </span>
+    </div>
+
+    <h2 class="navTitle">
+      MMI Calendar
+    </h2>
+
+    <div class="navSearchBar box">
+
+      <input type="search" name="search" id="search" placeholder="Rechercher" class="searchBar input">
+      <h3 class="navDescription">
+        Rechercher un cours, un professeur, une salle...
+      </h3>
+    </div>
+
+    <div class="navPeriodSelectors box">
+      <ul class="navPeriodSelectorsBox box">
+        <li class="navPeriodSelector">
+          <button id="prev" class="button prev input"><span class="material-symbols-outlined prev">
+              chevron_left
+            </span></button>
+        </li>
+        <li class="navPeriodSelector">
+          <button id="today" class="button today input"><span class="material-symbols-outlined today">
+              fiber_manual_record
+            </span></button>
+        </li>
+        <li class="navPeriodSelector">
+          <button id="next" class="button next input"><span class="material-symbols-outlined next">
+              chevron_right
+            </span></button>
+        </li>
+      </ul>
+      <h3 class="navDescription">
+        Changer la période de visualisation de l'emploi du temps.
+      </h3>
+
+    </div>
+
+
+    <div class="navTimeSelectors box">
+      <select name="time" id="time" class="navTimeSelector input">
+        <option value="day">Jour</option>
+        <option value="week" selected>Semaine</option>
+        <option value="month">Mois</option>
+      </select>
+      <h3 class="navDescription">
+        Changer l'échelle de temps de l'emploi du temps.
+      </h3>
+    </div>
+
+
+
+    <ul class="navYearsSelectors box">
+      <li class="navYearSelector box">
+        <input type="checkbox" name="mmi1" id="mmi1" class="checkbox">
+        <label class="label input" for="mmi1">MMI 1</label>
+      </li>
+      <li class="navYearSelector box">
+        <input type="checkbox" name="mmi2" id="mmi2" class="checkbox">
+        <label class="label input" for="mmi2">MMI 2</label>
+      </li>
+      <li class="navYearSelector box">
+        <input type="checkbox" name="mmi3" id="mmi3" class="checkbox">
+        <label class="label input" for="mmi3">MMI 3</label>
+      </li>
+      <h3 class="navDescription">
+        Changer les classes affichés sur l'emploi du temps.
+      </h3>
+    </ul>
+
+    <div class="navGroupsSelectors box">
+      <select name="group" id="group" multiple class="navGroupsSelector input">
+        <option value="all">TOUS</option>
+      </select>
+      <h3 class="navDescription navDescriptionGroups">
+        Changer les groupes affichés sur l'emploi du temps.
+      </h3>
+    </div>
+  </nav>
+
+  <div class="navPeriodSelectors box navPeriodSelectorsMobile">
+    <ul class="navPeriodSelectorsBox box">
+      <li class="navPeriodSelector">
+        <button id="prev" class="button prev input"><span class="material-symbols-outlined prev">
+            chevron_left
+          </span></button>
+      </li>
+      <li class="navPeriodSelector">
+        <button id="today" class="button today input"><span class="material-symbols-outlined today">
+            fiber_manual_record
+          </span></button>
+      </li>
+      <li class="navPeriodSelector">
+        <button id="next" class="button next input"><span class="material-symbols-outlined next">
+            chevron_right
+          </span></button>
+      </li>
+    </ul>
+
+
+  </div>
+
+  <main id="calendar" class="calendar"></main>
 
   <script type="module" src="/main.js"></script>
 

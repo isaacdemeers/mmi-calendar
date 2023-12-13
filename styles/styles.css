@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root {
+    --bgcolor: rgb(228, 228, 228);
+}
+
 * {
     box-sizing: border-box;
     user-select: none;
@@ -7,6 +11,128 @@
     padding: 0;
     margin: 0;
     font-family: 'Montserrat', sans-serif;
+    transition: all .3s ease;
+
+}
+
+
+body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.navbar {
+    z-index: 10;
+
+    height: 100vh;
+    width: fit-content;
+    min-width: 250px;
+    max-width: 320px;
+    padding: 4rem 2rem;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+
+
+    background-color: white;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.307);
+}
+
+.calendar {
+    width: 100%;
+    height: 100%;
+}
+
+.mobileOpen {
+    z-index: 100;
+    position: absolute;
+    z-index: 10;
+    left: 1.5rem;
+    top: 1.5rem;
+    opacity: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    border-radius: 50%;
+    background-color: rgba(231, 231, 231, 0.136);
+    box-shadow: 0 0px 10px -2px rgba(0, 0, 0, 0.229);
+
+    backdrop-filter: blur(30px);
+}
+
+.mobileClose {
+    position: absolute;
+    z-index: 101;
+    right: 1.5rem;
+    top: 1.5rem;
+    opacity: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.navDescription {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: .6rem;
+    margin-top: .3rem;
+    color: lightgray;
+    font-weight: 500;
+}
+
+
+
+.input {
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: var(--bgcolor);
+}
+
+.button {
+    padding: .5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.button:active {
+    transform: scale(.95);
+}
+
+.input:hover {}
+
+.searchBar {
+    width: 100%;
+    transition: all .3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+}
+
+.searchBar:focus {
+    width: 105%;
+
 }
 
 input[type=checkbox] {
@@ -14,71 +140,146 @@ input[type=checkbox] {
     display: none;
 }
 
-input[type=checkbox]+label {
-    background: lightgray;
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
 
-}
 
 input[type=checkbox]:checked+label {
-    background: lightcoral;
+    background: lightseagreen;
+    color: white;
 
 }
 
+.navPeriodSelectorsBox {
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-.checkboxItem {
+.navPeriodSelectorsMobile {
+    display: none;
+}
+
+.navTimeSelector {
+    width: 100%;
+}
+
+.label {
+    height: 100%;
+    width: 100%;
+    background-color: var(--bgcolor);
+}
+
+.label:active {
+    transform: scale(.95);
+}
+
+.navYearsSelectors {
+    gap: .5rem;
+}
+
+.navGroupsSelector {
+    width: 100%;
+    height: 150px;
+    opacity: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-button,
-select {
-    background: lightgray;
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-
-.box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    padding: 1rem;
-    gap: 1rem;
-}
-
-select[multiple] {
-    height: 200px;
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    gap: .2rem;
-    border: none;
-    outline: none;
-    background-color: lightgray;
 
 }
 
-select[multiple] option {
+.navGroupsSelector.hidden {
+    height: 0px;
+    opacity: 0;
+}
+
+.navDescriptionGroups.hidden {
+    opacity: 0;
+}
+
+
+
+.navGroupsSelector option {
     margin: .1rem 0;
     border-radius: 5px;
     padding: .1rem .2rem;
 }
 
-select[multiple] option:checked {
-    background-color: lightcoral;
+.navGroupsSelector option:checked {
+    background-color: lightseagreen;
     color: white;
-    /* Couleur du texte */
 }
 
-input[type=search] {
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-color: lightgray;
+
+@media (max-width: 500px) {
+
+    .navbar {
+        z-index: 12;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        max-width: none;
+        transform: translateX(-100%);
+        justify-content: flex-start;
+        gap: 2.5rem;
+    }
+
+    .button {
+        background-color: rgba(231, 231, 231, 0.136);
+        box-shadow: 0 0px 10px -2px rgba(0, 0, 0, 0.229);
+
+        backdrop-filter: blur(30px);
+
+    }
+
+    .mobileClose,
+    .mobileOpen {
+        display: flex;
+    }
+
+    .navbar.visible {
+        transform: translateX(0%);
+
+    }
+
+    .mobileOpen {
+        opacity: 1;
+        display: flex;
+    }
+
+    .navPeriodSelectors {
+        display: none;
+    }
+
+    .navPeriodSelectorsMobile {
+        z-index: 10;
+        position: absolute;
+        display: flex;
+        width: calc(100% - 2rem);
+        bottom: 1rem;
+        left: 50%;
+        background-color: rgba(255, 255, 255, 0.066);
+        padding: 1rem 1rem;
+        transform: translateX(-50%);
+        border-radius: 15px;
+        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.229);
+        backdrop-filter: blur(30px);
+    }
+
+
+
+    .navGroupsSelector {
+        width: 100%;
+        height: 150px;
+        opacity: 1;
+        display: flex;
+
+
+    }
+
+    .navGroupsSelector.hidden {
+        height: 0px;
+        opacity: 0;
+    }
+
+    .navDescriptionGroups.hidden {
+        opacity: 0;
+    }
 }

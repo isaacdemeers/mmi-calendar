@@ -4,11 +4,10 @@ import { V } from "./js/view.js";
 // INIT
 await M.init();
 
-
+let r = /^R[1-6](\.Crea)?(\.Dweb-DI)?\.[0-9]{2}/
 
 // LOCAL STORAGE SETUP
 let data = M.getLocalData();
-console.log(data);
 
 let defaultData = {
   years: ['mmi1', 'mmi2', 'mmi3'],
@@ -22,15 +21,11 @@ for (let key in defaultData) {
 }
 
 data = M.getLocalData();
-console.log(data);
-
 
 M.years = data.years.split(',');
 M.groups = data.groups.split(',');
 
 
-console.log(M.years);
-console.log(M.groups);
 
 
 // SETUP
@@ -40,21 +35,43 @@ V.renderGroups(M.years, M.classes, M.groups);
 V.setCookiesPreferences(M.years);
 
 
+
+// TEST
+// var WEEKLY_CUSTOM_THEME = {
+//   'week:timegridOneHour.height': '100px',
+// };
+// V.uicalendar.setTheme(
+//   WEEKLY_CUSTOM_THEME
+// )
+
+
+
+
 // CLICKS EVENTS LISTENERS 
 document.querySelector('body').addEventListener('click', function (e) {
 
+  // MOBILE MENU
+  if (e.target.classList.contains('mC')) {
+    document.querySelector('.navbar').classList.remove('visible');
+  }
+
+  // MOBILE MENU
+  if (e.target.classList.contains('mO')) {
+    document.querySelector('.navbar').classList.add('visible');
+  }
+
   // PREV VIEW
-  if (e.target.id.includes('prev')) {
+  if (e.target.classList.contains('prev')) {
     V.uicalendar.prev();
   }
 
   // NEXT VIEW
-  if (e.target.id.includes('next')) {
+  if (e.target.classList.contains('next')) {
     V.uicalendar.next();
   }
 
   // TODAY VIEW
-  if (e.target.id.includes('today')) {
+  if (e.target.classList.contains('today')) {
     V.uicalendar.today();
   }
 
@@ -83,6 +100,17 @@ document.querySelector('body').addEventListener('click', function (e) {
           M.groups.splice(M.groups.indexOf(group), 1);
         }
       });
+    }
+
+    if (M.years.length == 0) {
+      document.querySelector('.navGroupsSelector').classList.add('hidden');
+      document.querySelector('.navDescriptionGroups').classList.add('hidden');
+
+    }
+    else {
+      document.querySelector('.navGroupsSelector').classList.remove('hidden');
+      document.querySelector('.navDescriptionGroups').classList.remove('hidden');
+
     }
 
     M.setLocalData('groups', M.groups);
