@@ -33,39 +33,21 @@ M.init = async function () {
     }
 }
 
+// GET LOCAL STORAGE DATA
+M.getLocalData = function () {
+    return localStorage;
+};
 
-// GET COOKIES
-M.getCookies = function () {
+// SET LOCAL STORAGE DATA
+M.setLocalData = function (key, data) {
+    localStorage.setItem(key, data);
+};
 
-    // ajoute une correction d'erreur
-    if (document.cookie == '') {
-        return [];
-    }
-    let cookies = document.cookie.split(';');
-    let data = {};
-    cookies.forEach(cookie => {
-        let key = cookie.split('=')[0].trim();
-        let value = cookie.split('=')[1].trim();
-        data[key] = value;
-    });
-    return data;
-}
+// CLEAR LOCAL STORAGE DATA
+M.clearLocalData = function (key) {
+    localStorage.removeItem(key);
+};
 
-// SET COOKIES
-M.setCookies = function (key, cookies) {
-
-    let date = new Date();
-    date.setFullYear(date.getFullYear() + 1);
-    date = date.toUTCString();
-    document.cookie = key + '=' + cookies + ';expires=' + date;
-}
-
-M.delAllCookies = function () {
-    let cookies = M.getCookies();
-    for (let cookie in cookies) {
-        document.cookie = cookie + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
-}
 
 // GET ALL EVENTS
 M.getAllEvents = function () {

@@ -4,28 +4,33 @@ import { V } from "./js/view.js";
 // INIT
 await M.init();
 
-// COOKIES SETUP
-let cookies = M.getCookies();
 
-let defaultCookies = {
+
+// LOCAL STORAGE SETUP
+let data = M.getLocalData();
+console.log(data);
+
+let defaultData = {
   years: ['mmi1', 'mmi2', 'mmi3'],
   groups: ['all']
 };
 
-for (let cookie in defaultCookies) {
-  if (!cookies[cookie]) {
-    console.log(cookie, defaultCookies[cookie]);
-    M.setCookies(cookie, defaultCookies[cookie]);
+for (let key in defaultData) {
+  if (!data[key]) {
+    M.setLocalData(key, defaultData[key]);
   }
 }
 
-cookies = M.getCookies();
+data = M.getLocalData();
+console.log(data);
 
 
+M.years = data.years.split(',');
+M.groups = data.groups.split(',');
 
-M.years = cookies.years.split(',');
-M.groups = cookies.groups.split(',');
 
+console.log(M.years);
+console.log(M.groups);
 
 
 // SETUP
@@ -80,8 +85,8 @@ document.querySelector('body').addEventListener('click', function (e) {
       });
     }
 
-    M.setCookies('groups', M.groups);
-    M.setCookies('years', M.years);
+    M.setLocalData('groups', M.groups);
+    M.setLocalData('years', M.years);
 
     V.renderGroups(M.years, M.classes, M.groups);
     V.uicalendar.clear();
@@ -109,8 +114,8 @@ document.querySelector('body').addEventListener('change', function (e) {
       }
     }
     V.uicalendar.clear();
-    M.setCookies('groups', M.groups);
-    M.setCookies('years', M.years);
+    M.setLocalData('groups', M.groups);
+    M.setLocalData('years', M.years);
 
 
     if (M.search == '') {

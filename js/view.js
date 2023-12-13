@@ -8,6 +8,7 @@ V.uicalendar = new Calendar('#calendar', {
   isReadOnly: true,
   usageStatistics: false,
   useDetailPopup: true,
+
   week: {
     startDayOfWeek: 1,
     dayNames: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
@@ -16,6 +17,7 @@ V.uicalendar = new Calendar('#calendar', {
     hourEnd: 20,
     taskView: false,
     eventView: ['time'],
+    // timegridOneHour.height:
   },
   month: {
     startDayOfWeek: 1,
