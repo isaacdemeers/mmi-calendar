@@ -6,51 +6,58 @@ await M.init();
 
 
 let cookies = M.getCookies();
+let defaultCookies = {
+  years: ['mmi1', 'mmi2', 'mmi3'],
+  groups: ['all']
+};
 
-if (cookies.years == undefined) {
-  M.setCookies(['mmi1', 'mmi2', 'mmi3'], []);
-  cookies = M.getCookies();
+for (let cookie in defaultCookies) {
+  if (!cookies[cookie]) {
+    console.log(cookie, defaultCookies[cookie]);
+    M.setCookies(cookie, defaultCookies[cookie]);
+  }
 }
-if (cookies.groups == undefined) {
-  M.setCookies([], ['all']);
-  cookies = M.getCookies();
-}
+
+cookies = M.getCookies();
+
+
+
 M.years = cookies.years.split(',');
 M.groups = cookies.groups.split(',');
-console.log(cookies);
 
 
 
-//SETUP
+// SETUP
 V.testSupport();
 V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
 V.renderGroups(M.years, M.classes, M.groups);
 V.setCookiesPreferences(M.years);
 
 
-// EVENTS LISTENERS CLICKS
+// CLICKS EVENTS LISTENERS 
 document.querySelector('body').addEventListener('click', function (e) {
 
-  // VUE PRECEDENTE
+  // PREV VIEW
   if (e.target.id.includes('prev')) {
     V.uicalendar.prev();
   }
 
-  // VUE SUIVANTE
+  // NEXT VIEW
   if (e.target.id.includes('next')) {
     V.uicalendar.next();
   }
 
-  // VUE AUJOURD'HUI
+  // TODAY VIEW
   if (e.target.id.includes('today')) {
     V.uicalendar.today();
   }
 
-  // CLEAR DE LA RECHERCHE
+  // CLEAR SEARCH BAR
   if (e.target.id.includes('search')) {
     V.clearSearchBar();
   }
 
+  // YEARS CHECKBOXES
   if (e.target.classList.contains('checkbox')) {
     if (e.target.checked) {
       M.years.push(e.target.id);
@@ -67,19 +74,19 @@ document.querySelector('body').addEventListener('click', function (e) {
           M.groups.splice(M.groups.indexOf(group), 1);
         }
       });
-
     }
-    M.setCookies(M.years, M.groups);
+
+    M.setCookies('groups', M.groups);
+    M.setCookies('years', M.years);
+
     V.renderGroups(M.years, M.classes, M.groups);
     V.uicalendar.clear();
-    console.log(M.search);
     if (M.search == '') {
       V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
     }
     else {
       V.uicalendar.createEvents(M.getEventsByFilter(M.years, M.search));
     }
-
   }
 
 });
@@ -98,7 +105,9 @@ document.querySelector('body').addEventListener('change', function (e) {
       }
     }
     V.uicalendar.clear();
-    M.setCookies(M.years, M.groups);
+    M.setCookies('groups', M.groups);
+    M.setCookies('years', M.years);
+
 
     if (M.search == '') {
       V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
@@ -106,9 +115,6 @@ document.querySelector('body').addEventListener('change', function (e) {
     else {
       V.uicalendar.createEvents(M.filterEvents(M.getEventsByGroup(M.years, M.groups), M.search));
     }
-
-
-
   }
 
   // CHANGEMENT DE LA VUE

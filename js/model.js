@@ -52,18 +52,12 @@ M.getCookies = function () {
 }
 
 // SET COOKIES
-M.setCookies = function (years, groups) {
+M.setCookies = function (key, cookies) {
+
     let date = new Date();
     date.setFullYear(date.getFullYear() + 1);
     date = date.toUTCString();
-    if (years.length != 0) {
-        document.cookie = 'years=' + years.join(',') + ';expires=' + date;
-
-    }
-    if (groups.length != 0) {
-        document.cookie = 'groups=' + groups.join(',') + ';expires=' + date;
-    }
-
+    document.cookie = key + '=' + cookies + ';expires=' + date;
 }
 
 M.delAllCookies = function () {
