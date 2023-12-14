@@ -3,6 +3,77 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 
 let V = {};
 
+var CUSTOM_THEME = {
+  common: {
+    dayName: {
+      color: '#000000',
+    },
+    today: {
+      color: 'white',
+    },
+    timegridOneHour: {
+      height: '20px'
+    },
+    backgroundColor: 'white',
+  },
+
+  day: {
+
+  },
+  week: {
+
+    nowIndicatorLabel: {
+      color: '#20b2aa',
+    },
+    dayGridLeft: {
+      borderRight: 'none',
+      backgroundColor: 'rgba(81, 92, 230, 0.05)',
+      width: '95px',
+    },
+    timeGridLeft: {
+      borderRight: 'none',
+      backgroundColor: 'rgba(81, 92, 230, 0.05)',
+      width: '90px',
+    },
+    dayName: {
+      borderLeft: 'none',
+      borderTop: 'none',
+      borderBottom: 'none',
+      backgroundColor: 'rgba(81, 92, 230, 0.05)',
+    },
+
+    timeGridHalfHourLine: {
+      borderBottom: '1px dotted #e5e5e5',
+    },
+    nowIndicatorPast: {
+      border: '1px dashed #20b2aa',
+    },
+    nowIndicatorToday: {
+      border: '1px solid #20b2aa',
+    },
+
+    nowIndicatorBullet: {
+      backgroundColor: '#20b2aa',
+    },
+    nowIndicatorFuture: {
+      border: '1px solid #20b2aa',
+    },
+
+    futureTime: {
+      color: '#20b2aa',
+    },
+
+
+  }
+};
+
+var CUSTOM_OPTIONS = {
+  time(event) {
+    return `<span style="color: white;">${event.title}</span>`;
+  },
+};
+
+
 V.uicalendar = new Calendar('#calendar', {
   defaultView: 'week',
   isReadOnly: true,
@@ -23,16 +94,21 @@ V.uicalendar = new Calendar('#calendar', {
     startDayOfWeek: 1,
     dayNames: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
     workweek: true,
-    taskView: false,
-    eventView: ['time'],
   },
   template: {
     time: function (event) {
-      return `<span style="color: black;">${event.title}</span>`;
+      return (
+        '<span class="calendar-event-time" style=" font-weight: 600; color: #000;">' + event.title + '</span>'
+      );
     },
-
   },
+
 });
+
+V.uicalendar.setTheme(
+  CUSTOM_THEME
+)
+
 
 
 // RENDER GROUPS IN THE SELECT

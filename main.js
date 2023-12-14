@@ -37,12 +37,6 @@ V.setCookiesPreferences(M.years);
 
 
 // TEST
-// var WEEKLY_CUSTOM_THEME = {
-//   'week:timegridOneHour.height': '100px',
-// };
-// V.uicalendar.setTheme(
-//   WEEKLY_CUSTOM_THEME
-// )
 
 
 

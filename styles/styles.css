@@ -115,6 +115,7 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    height: 100%;
 
 }
 
@@ -151,6 +152,11 @@ input[type=checkbox]:checked+label {
 .navPeriodSelectorsBox {
     flex-direction: row;
     justify-content: space-between;
+    height: 40px;
+}
+
+.navPeriodSelector {
+    height: 100%;
 }
 
 .navPeriodSelectorsMobile {
@@ -202,7 +208,7 @@ input[type=checkbox]:checked+label {
 }
 
 .navGroupsSelector option:checked {
-    background-color: lightseagreen;
+    background-color: #20b2aa;
     color: white;
 }
 

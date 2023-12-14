@@ -94,7 +94,7 @@ M.filterEvents = function (events, keywords) {
         let newEvents = [];
         keywords = keywords.split(' ');
         events.forEach(event => {
-            let data = event.title + event.location + event.body + event.attendees.join(' ');
+            let data = event.title + ' ' + event.location + ' ' + event.body + ' ' + event.attendees.join(' ');
             data = data.toLowerCase();
 
             if (keywords.every(keyword => data.includes(keyword.toLowerCase()))) {
