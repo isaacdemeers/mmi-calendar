@@ -67,13 +67,6 @@ var CUSTOM_THEME = {
   }
 };
 
-var CUSTOM_OPTIONS = {
-  time(event) {
-    return `<span style="color: white;">${event.title}</span>`;
-  },
-};
-
-
 V.uicalendar = new Calendar('#calendar', {
   defaultView: 'week',
   isReadOnly: true,
@@ -156,11 +149,20 @@ V.clearSearchBar = function () {
 V.testSupport = function () {
   const isPhone = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  let selectElement = document.getElementById('time');
+  let selectedValue = 'week';
+
+
   if (isPhone) {
     V.uicalendar.changeView('day');
+    selectedValue = 'day';
+
   } else {
     V.uicalendar.changeView('week');
+    selectedValue = 'week';
   }
+  selectElement.value = selectedValue;
+
 }
 
 
