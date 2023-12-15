@@ -91,7 +91,7 @@ V.uicalendar = new Calendar('#calendar', {
   template: {
     time: function (event) {
       return (
-        '<span class="calendar-event-time" style=" font-weight: 600; color: #000;">' + event.title + '</span>'
+        '<span class="calendar-event-time" style="font-weight: 600; color: #000;">' + event.title + '</span>'
       );
     },
   },
@@ -136,13 +136,26 @@ V.setCookiesPreferences = function (years) {
       checkbox.checked = true;
     }
   });
-
-
 }
 
 // CLEAR THE SEARCH BAR
 V.clearSearchBar = function () {
   document.querySelector('#search').value = '';
+}
+
+// HIDE THE LOADER
+V.hideLoader = function () {
+  document.querySelector('.loader').classList.add('hidden');
+}
+
+// RENDER THE HOURS
+V.renderHours = function (hours) {
+  let html = '';
+  let target = document.querySelector('.navHoursTime');
+  let hoursHTML = `<h4 class="navHoursTimeText">${hours.TOTAL}h affichées </br><span>TP: ${hours.TP}h・TD: ${hours.TD}h・CM: ${hours.CM}h</span></h4>`;
+
+  target.innerHTML = hoursHTML;
+
 }
 
 // SET THE VIEW
@@ -161,7 +174,9 @@ V.testSupport = function () {
     V.uicalendar.changeView('week');
     selectedValue = 'week';
   }
+
   selectElement.value = selectedValue;
+  return selectedValue;
 
 }
 

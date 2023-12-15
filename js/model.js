@@ -14,6 +14,9 @@ let M = {};
 M.years = [];
 M.groups = [];
 M.search = '';
+M.timeFrame = 'week';
+M.viewTimeFrame = 0;
+M.events = []
 
 // GROUPS BY YEAR
 M.classes = {
@@ -79,8 +82,6 @@ M.getEventsByGroup = function (years, groups) {
 
 // GET EVENTS BY FILTER
 M.getEventsByFilter = function (years, keywords) {
-
-    console.log(years);
     let events = [];
     years.forEach(year => {
         events.push(...Events[year].getEventsByFilter(keywords));
@@ -90,9 +91,8 @@ M.getEventsByFilter = function (years, keywords) {
 
 // FILTER GIVEN EVENTS
 M.filterEvents = function (events, keywords) {
-    if (keywords != '') {
+    if (keywords != '' && keywords != undefined && keywords != null && keywords.length > 0) {
         let newEvents = [];
-        keywords = keywords.split(' ');
         events.forEach(event => {
             let data = event.title + ' ' + event.location + ' ' + event.body + ' ' + event.attendees.join(' ');
             data = data.toLowerCase();
@@ -108,5 +108,76 @@ M.filterEvents = function (events, keywords) {
     }
 
 }
+
+
+// RETURN THE DATE OF THE FIRST DAY OF THE TIME FRAME AND THE LAST DAY OF THE TIME FRAME (day, week, month)
+M.getTimeFrame = function (timeFrame, viewTimeFrame) {
+    let today = new Date();
+    let currentDay = today.getDay();
+    let startDate = new Date(today);
+    let endDate = new Date(today);
+
+    switch (timeFrame) {
+        case 'day':
+            startDate.setDate(today.getDate() + viewTimeFrame);
+            endDate.setDate(today.getDate() + viewTimeFrame);
+            break;
+        case 'week':
+
+            startDate.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1) + (viewTimeFrame * 7));
+
+            endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+
+            break;
+        case 'month':
+            startDate.setMonth(today.getMonth() + viewTimeFrame);
+            startDate.setDate(1);
+            endDate.setMonth(startDate.getMonth() + 1);
+            endDate.setDate(0);
+            break;
+    }
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    return {
+        start: startDate,
+        end: endDate
+    };
+}
+
+// COUNT THE TOTAL HOURS OF THE EVENTS GIVEN
+M.countHours = function (events) {
+    let hours = {
+        TOTAL: 0,
+        TP: 0,
+        TD: 0,
+        CM: 0,
+    }
+    let interval = M.getTimeFrame(M.timeFrame, M.viewTimeFrame);
+    // console.log(interval.start);
+    // console.log(interval.end);
+
+
+    let newEvents = events.filter(event => {
+        return event.start >= interval.start && event.end <= interval.end;
+    });
+
+    newEvents.forEach(event => {
+        let duration = (event.end - event.start) / 1000 / 60 / 60;
+        hours.TOTAL += duration;
+
+        for (let type in hours) {
+            if (event.title.includes(type)) {
+                hours[type] += duration;
+                break;
+            }
+
+        }
+    });
+
+    return hours
+};
+
 
 export { M };

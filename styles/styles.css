@@ -21,27 +21,50 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
     height: 100vh;
+}
+
+.loader {
+    position: absolute;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all .7s ease-in-out;
+    gap: .5rem;
+
+}
+
+.loader.hidden {
+    transform: translateY(-100%);
 }
 
 .navbar {
     z-index: 10;
 
-    height: 100vh;
     width: fit-content;
     min-width: 250px;
     max-width: 320px;
+
+    height: 100vh;
     padding: 4rem 2rem;
 
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
 
-
     background-color: white;
+    gap: 2.5rem;
 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.307);
+    overflow: scroll;
 }
 
 .calendar {
@@ -61,10 +84,9 @@ body {
     align-items: center;
     padding: .5rem;
     border-radius: 50%;
-    background-color: rgba(231, 231, 231, 0.136);
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 0px 10px -2px rgba(0, 0, 0, 0.229);
 
-    backdrop-filter: blur(30px);
 }
 
 .mobileClose {
@@ -212,6 +234,18 @@ input[type=checkbox]:checked+label {
     color: white;
 }
 
+.navHoursTimeText {
+    width: 100%;
+    text-align: left;
+    font-size: .9rem;
+}
+
+.navHoursTimeText span {
+    font-size: .7rem;
+    font-weight: 500;
+    color: gray;
+}
+
 
 @media (max-width: 500px) {
 
@@ -224,15 +258,16 @@ input[type=checkbox]:checked+label {
         max-width: none;
         transform: translateX(-100%);
         justify-content: flex-start;
-        gap: 2.5rem;
+        overflow: hidden;
+        padding: 2rem 2rem;
+        min-height: 100vh;
+        height: fit-content;
+
     }
 
     .button {
-        background-color: rgba(231, 231, 231, 0.136);
+        background-color: rgba(231, 231, 231, 0.196);
         box-shadow: 0 0px 10px -2px rgba(0, 0, 0, 0.229);
-
-        backdrop-filter: blur(30px);
-
     }
 
     .mobileClose,
@@ -242,7 +277,7 @@ input[type=checkbox]:checked+label {
 
     .navbar.visible {
         transform: translateX(0%);
-
+        overflow: scroll;
     }
 
     .mobileOpen {
@@ -261,12 +296,11 @@ input[type=checkbox]:checked+label {
         width: calc(100% - 2rem);
         bottom: 1rem;
         left: 50%;
-        background-color: rgba(255, 255, 255, 0.066);
+        background-color: rgb(255, 255, 255);
         padding: 1rem 1rem;
         transform: translateX(-50%);
         border-radius: 15px;
         box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.229);
-        backdrop-filter: blur(30px);
     }
 
 

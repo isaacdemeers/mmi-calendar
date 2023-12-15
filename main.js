@@ -4,7 +4,7 @@ import { V } from "./js/view.js";
 // INIT
 await M.init();
 
-let r = /^R[1-6](\.Crea)?(\.Dweb-DI)?\.[0-9]{2}/
+// let r = /^R[1-6](\.Crea)?(\.Dweb-DI)?\.[0-9]{2}/
 
 // LOCAL STORAGE SETUP
 let data = M.getLocalData();
@@ -29,14 +29,18 @@ M.groups = data.groups.split(',');
 
 
 // SETUP
-V.testSupport();
-V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+M.timeFrame = V.testSupport();
+M.events = M.getEventsByGroup(M.years, M.groups);
+V.uicalendar.createEvents(M.events);
+V.renderHours(M.countHours(M.events));
 V.renderGroups(M.years, M.classes, M.groups);
 V.setCookiesPreferences(M.years);
 
 
 
 // TEST
+V.hideLoader();
+
 
 
 
@@ -57,23 +61,33 @@ document.querySelector('body').addEventListener('click', function (e) {
   // PREV VIEW
   if (e.target.classList.contains('prev')) {
     V.uicalendar.prev();
+    M.viewTimeFrame -= 1;
+
   }
 
   // NEXT VIEW
   if (e.target.classList.contains('next')) {
     V.uicalendar.next();
+    M.viewTimeFrame += 1;
+
+
+
   }
 
   // TODAY VIEW
   if (e.target.classList.contains('today')) {
     V.uicalendar.today();
+    M.viewTimeFrame = 0;
+
   }
 
   // CLEAR SEARCH BAR
   if (e.target.id.includes('search')) {
     V.clearSearchBar();
     V.uicalendar.clear();
-    V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+    M.events = M.getEventsByGroup(M.years, M.groups);
+    V.uicalendar.createEvents(M.events);
+
 
   }
 
@@ -113,12 +127,17 @@ document.querySelector('body').addEventListener('click', function (e) {
     V.renderGroups(M.years, M.classes, M.groups);
     V.uicalendar.clear();
     if (M.search == '') {
-      V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+      M.events = M.getEventsByGroup(M.years, M.groups);
+      V.uicalendar.createEvents(M.events);
     }
     else {
-      V.uicalendar.createEvents(M.getEventsByFilter(M.years, M.search));
+      M.events = M.getEventsByFilter(M.years, M.search);
+      V.uicalendar.createEvents(M.events);
     }
   }
+
+  V.renderHours(M.countHours(M.events))
+
 
 });
 
@@ -141,16 +160,23 @@ document.querySelector('body').addEventListener('change', function (e) {
 
 
     if (M.search == '') {
-      V.uicalendar.createEvents(M.getEventsByGroup(M.years, M.groups));
+      M.events = M.filterEvents(M.getEventsByGroup(M.years, M.groups));
+      V.uicalendar.createEvents(M.events);
+      V.renderHours(M.countHours(M.events))
     }
     else {
-      V.uicalendar.createEvents(M.filterEvents(M.getEventsByGroup(M.years, M.groups), M.search));
+      M.events = M.filterEvents(M.getEventsByGroup(M.years, M.groups), M.search);
+      V.uicalendar.createEvents(M.events);
+      V.renderHours(M.countHours(M.events))
     }
   }
 
   // CHANGEMENT DE LA VUE
   if (e.target.id.includes('time')) {
     V.uicalendar.changeView(e.target.value);
+    M.timeFrame = e.target.value;
+    V.renderHours(M.countHours(M.events))
+
   }
 
 });
@@ -162,8 +188,9 @@ document.querySelector('body').addEventListener('keyup', function (e) {
   // RENDER DE LA RECHERCHE
   if (e.target.id.includes('search')) {
     V.uicalendar.clear();
-    console.log(e.target.value);
-    V.uicalendar.createEvents(M.getEventsByFilter(M.years, e.target.value));
+    M.events = M.getEventsByFilter(M.years, M.search);
+    V.uicalendar.createEvents(M.events);
+    V.renderHours(M.countHours(M.events));
     M.search = e.target.value;
   }
 });
